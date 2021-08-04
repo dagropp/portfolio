@@ -1,0 +1,53 @@
+@mixin full-spread($position: absolute, $offset: 0) {
+  position: $position;top: $offset;right: $offset;bottom: $offset;left: $offset;
+}
+
+@mixin flex-centered($direction: row) {
+  display: flex;flex-direction: $direction;align-items: center;justify-content: center;
+}
+
+@mixin restrict-width($restriction, $width: 100%) {
+  width: $width;max-width: $restriction;
+}
+
+@mixin square($size) {
+  height: $size;width: $size;
+}
+
+@mixin circle($size) {
+  @include square($size);border-radius: 50%;
+}
+
+@mixin float-shadow {box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5)}
+
+@mixin shadow-main {box-shadow: 0 3px 5px 0 #d0d0d0}
+
+@mixin linear-gradient($fallback, $params...) {
+  background-color: $fallback;background: -webkit-linear-gradient($params);background: linear-gradient($params);
+}
+
+@mixin sticky {position: -webkit-sticky;position: sticky}
+
+@mixin break-inside($value) {-webkit-column-break-inside: $value;page-break-inside: $value;break-inside: $value}
+
+@mixin height($height, $min-height: 0, $max-height: none) {
+  height: $height;min-height: $min-height;max-height: $max-height;
+}
+
+@mixin width($width, $min-width: 0, $max-width: none) {
+  width: $width;min-width: $min-width;max-width: $max-width;
+}
+
+@mixin increase-click-area($offset: -10px, $position: relative) {
+  position: $position;
+  &::after {content: " ";@include full-spread(absolute, $offset);background-color: transparent}
+}
+
+@mixin custom-scroll-bar($color) {
+  &::-webkit-scrollbar {width: 3px;}
+  //&::-webkit-scrollbar-track {padding-right: 5px}
+  &::-webkit-scrollbar-thumb {background-color: $color;}
+}
+
+$app-width-desktop: 1080px;
+$link-color: #FFCC70;

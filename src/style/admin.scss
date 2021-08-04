@@ -1,0 +1,56 @@
+@import "mixins";
+
+.admin-main {
+  color: white;
+}
+
+.admin-form-wrapper {
+  label {display: table;position: relative;
+    > span {width: 135px;display: inline-block;vertical-align: top}
+    + label {margin-top: 10px}
+  }
+  .input-wrapper {position: relative;width: 400px}
+  input:not([type=checkbox]), select, textarea {background-color: transparent;color: white;border: 1px solid white;
+    border-radius: 6px;min-height: 26px;padding: 0 5px;width: 400px;
+    &::placeholder {color: white;opacity: .6}
+    &[readonly] {background-color: rgba(255, 255, 255, .4);border: none}
+    &::-webkit-calendar-picker-indicator {position: absolute;left: 112px;width: 390px;opacity: 0}
+    option {background-color: #222;text-transform: capitalize;}
+    &:focus {outline: none}
+    &.tag-input {padding-left: 40px}
+  }
+  select {text-transform: capitalize}
+  textarea {resize: none;@include custom-scroll-bar(white);padding: 5px}
+  input[type=checkbox] {appearance: none;background-color: transparent;padding: 0 10px;min-height: 26px;
+    border-radius: 6px;border: 1px solid white;margin: 5px;transition: .3s ease-in-out;
+    transition-property: background-color, color;cursor: pointer;color: white;font-weight: bold;line-height: 26px;
+    &::after {content: attr(data-display)}
+    &:checked {background-color: rgba(255, 255, 255, .4);border-color: #4158d0}
+    &:hover:not(:checked) {background-color: rgba(255, 255, 255, .1)}
+  }
+  .checkbox-wrapper {margin: 0 -5px -5px;display: inline-block;width: 400px}
+  .form-row {display: flex;
+    label + label {margin-top: 0;margin-left: 15px}
+  }
+  .form-inner {margin-top: 20px}
+  .form-title {font-size: 18px;font-weight: 500;margin-bottom: 20px;
+    .action {display: inline-block;width: 135px;text-decoration: underline}
+    .title {
+      &:empty:before {content: "Untitled";opacity: .3}
+    }
+  }
+  button {appearance: none;border: none;border-radius: 6px;min-height: 26px;cursor: pointer;
+    transition: background-color .3s ease-in-out;
+    &[type=submit] {min-width: 100px;padding: 0 10px;color: #222;font-weight: bold;background-color: white;
+      &:hover {background-color: rgba(255, 255, 255, .8)}
+    }
+    &.inner-button {position: absolute;right: 0;padding: 0 20px;font-weight: bold;color: white;
+      background-color: transparent;
+      &:hover {background-color: rgba(255, 255, 255, .3)}
+    }
+  }
+}
+
+.list-item + .list-item {
+  margin-top: 10px
+}

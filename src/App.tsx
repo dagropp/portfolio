@@ -1,25 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from "react";
+import {userService} from "./global/UserService";
+import {Route, Switch, Redirect, useLocation} from "react-router-dom";
+import AppMenu from "./components/AppMenu";
+import {navService} from "./global/NavService";
+import "./style/general.scss";
+import "./style/main.scss";
+import "./style/popup.scss";
+import "./style/admin.scss";
+import ContactPopup from "./components/popup/ContactPopup";
+import EditProject from "./pages/admin/EditProject";
 
-function App() {
+const App: React.FC = () => {
+
+  const location = useLocation();
+
+  const routes = navService.getMenuItems()
+    .map(({id, path, component, redirect}) =>
+      <Route
+        key={id}
+        path={path}
+        component={component}
+        exact
+      >
+        {redirect && <Redirect to={redirect}/>}
+      </Route>
+    )
+
+  useEffect(() => {
+    userService.trackUser(location.pathname, "entrance");
+    window.addEventListener("beforeunload",
+      () => userService.trackUser(location.pathname, "exit"),
+      {once: true}
+    );
+  }, []);
+
+  useEffect(() => {
+    userService.trackUser(location.pathname, "browse");
+  }, [location.pathname]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AppMenu/>
+      <Switch location={location}>
+        {routes}
+      </Switch>
+      <ContactPopup/>
+    </>
   );
 }
 

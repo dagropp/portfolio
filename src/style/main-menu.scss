@@ -1,0 +1,14 @@
+@import "mixins";
+
+.main-header {@include sticky;top: 0;backdrop-filter: blur(15px) grayscale(20%);z-index: 1;
+  .menu-wrapper {@include restrict-width($app-width-desktop);margin: auto;
+    .menu-list {display: flex;justify-content: space-between;
+      .menu-list-item {flex: 1;text-align: center;border-radius: 10px;
+        cursor: pointer;transition: background-color .3s ease-in-out;
+        a {color: white;text-decoration: none;font-weight: 500;font-size: 20px;padding: 15px 0;display: block}
+        &:hover, &.active-page {background-color: rgba(255, 255, 255, 0.2)}
+      }
+    }
+  }
+  &:hover .menu-wrapper .menu-list .menu-list-item.active-page:not(:hover) {background: none}
+}

@@ -1,0 +1,19 @@
+@import "../../style/mixins";
+
+.emoji-picker-button {appearance: none;border: none;position: absolute;left: 0;background-color: transparent;
+  font-family: "Segoe UI Emoji";padding: 0 10px;line-height: 26px;
+  &:hover {background-color: rgba(255, 255, 255, .3)}
+}
+
+.emoji-picker {position: absolute;transform: scaleY(0);transform-origin: top left;transition: all .3s ease-in-out;
+  * {box-sizing: border-box;margin: 0;padding: 0;list-style: none}
+  padding: 5px;border: 1px solid white;@include custom-scroll-bar(white);height: 350px;overflow-y: auto;
+  ul {width: 350px;
+    li {font-family: "Segoe UI Emoji";display: inline-flex;align-items: center;justify-content: center;
+      border-radius: 6px;user-select: none;
+      height: 35px;width: 35px;font-size: 26px;cursor: pointer;transition: background-color .3s ease-in-out;
+      &:hover {background-color: rgba(255, 255, 255, .5)}
+    }
+  }
+  &.show {transform: scaleY(1)}
+}

@@ -1,0 +1,61 @@
+@import "mixins";
+
+/* General */
+* {font-family: "IBM Plex Sans", sans-serif;margin: 0;padding: 0;box-sizing: border-box}
+
+li {list-style: none}
+
+a {color: $link-color}
+
+h2, h3, h4, h5, h6 {font-weight: 600}
+
+h1 {font-size: 24px;font-weight: 700}
+
+h2 {font-size: 20px}
+
+h3 {font-size: 18px}
+
+p {font-size: 16px}
+
+/* Reusables */
+.bold {font-weight: bold}
+
+.centered {text-align: center}
+
+.align-right {text-align: right}
+
+.align-left {text-align: left}
+
+.underline {text-decoration: underline}
+
+.italic {font-style: italic}
+
+.fixed {position: fixed}
+
+.flex {display: flex}
+
+.flex-row-centered {@include flex-centered}
+
+.flex-col-centered {@include flex-centered(column)}
+
+.flex-row-between {display: flex;justify-content: space-between;align-items: center}
+
+.flex-1 {flex: 1}
+
+.light-box {@include full-spread(fixed)}
+
+.line-spacer {width: 100%}
+
+.ellipsis {white-space: nowrap;overflow: hidden;text-overflow: ellipsis}
+
+.fixed-backdrop {@include full-spread(fixed)}
+
+.relative {position: relative}
+
+.absolute {position: absolute}
+
+.w100 {width: 100%}
+
+.fz12 {font-size: 12px}
+
+.black {color: black}
