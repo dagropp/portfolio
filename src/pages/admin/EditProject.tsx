@@ -7,7 +7,6 @@ import FormTextarea from "../../components/form/FormTextarea";
 import TypeUtils from "../../global/TypeUtils";
 import AdminService from "../../global/AdminService";
 import FormSelectButton from "../../components/form/FormSelectButton";
-import EmojiPicker from "../../components/emoji-picker/EmojiPicker";
 import TagInput from "../../components/admin/TagInput";
 
 const newProject: RestProject = {

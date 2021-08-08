@@ -1,6 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import EmojiPicker from "../emoji-picker/EmojiPicker";
-import FormInput from "../form/FormInput";
 
 interface ContainerProps {
   currentTags: Nullable<string>;
@@ -27,7 +25,6 @@ const TagInput: React.FC<ContainerProps> = ({currentTags}) => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <EmojiPicker inputRef={inputRef}/>
         <button className="inner-button" type="button">Add +</button>
       </span>
       <div className="checkbox-wrapper">
