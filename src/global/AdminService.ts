@@ -23,6 +23,7 @@ class AdminService {
       mysql: {display: "MySQL", icon: ""},
       java: {display: "Java", icon: ""},
       python: {display: "Python", icon: ""},
+      typescript: {display: "TypeScript", icon: ""},
       redux: {display: "Redux", icon: ""},
       ionic: {display: "Ionic", icon: ""},
     }

@@ -8,19 +8,18 @@ import "./style/main.scss";
 import "./style/popup.scss";
 import "./style/admin.scss";
 import ContactPopup from "./components/popup/ContactPopup";
-import EditProject from "./pages/admin/EditProject";
 
 const App: React.FC = () => {
 
   const location = useLocation();
 
-  const routes = navService.getMenuItems()
+  const routes = navService.menuItems
     .map(({id, path, component, redirect}) =>
       <Route
         key={id}
         path={path}
         component={component}
-        exact
+        exact={id !== "admin"}
       >
         {redirect && <Redirect to={redirect}/>}
       </Route>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, EventHandler, useEffect, useState} from "react";
+import React, {ChangeEvent, EventHandler, FormEvent, useEffect, useState} from "react";
 import ServerService from "../../global/ServerService";
 import UiService from "../../global/UiService";
 import FormSelect from "../../components/form/FormSelect";
@@ -67,8 +67,18 @@ const EditProject: React.FC = () => {
     }
   }
 
-  const addTag = () => {
+  const handleSubmit: EventHandler<FormEvent> = (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const data: any = {is_new: isNew};
 
+    for (const key of formData.keys()) {
+      data[key] = formData.getAll(key).join();
+    }
+
+    ServerService.post("update_project", data)
+      .then(console.log);
   }
 
   interface TextInputProps {
@@ -89,8 +99,7 @@ const EditProject: React.FC = () => {
     {id: "site_link", type: "url"},
     {id: "download_link", type: "url"},
     {id: "github"},
-    {id: "npm"},
-
+    {id: "npm"}
   ]
 
   const currentProjects = projects.map(({id, title, app_section}) =>
@@ -125,20 +134,23 @@ const EditProject: React.FC = () => {
     .map(([key, value]) =>
       <FormSelectButton
         type="checkbox"
+        name="tools"
         key={key}
         value={key}
-        data-display={value.display}
+        display={value.display}
         checked={current.tools?.split(",").includes(key) ?? false}
       />
     )
 
   const devSkillsOptions = Object.entries(AdminService.devSkillsList)
     .map(([key, value]) =>
-      <input
+      <FormSelectButton
         type="checkbox"
+        name="skills"
         key={key}
         value={key}
-        data-display={value.display}
+        display={value.display}
+        checked={false}
       />
     )
 
@@ -156,13 +168,9 @@ const EditProject: React.FC = () => {
     )
   })
 
-  // tags: Nullable<string>;
-  // tools: Nullable<string>;
-  // type: string;
-
   return (
     <section className="admin-form-wrapper">
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <label htmlFor="current_project">
           <span>Select Project</span>
           <FormSelect name="current_project" id="current_project" value="" onChange={switchProject}>
@@ -188,9 +196,9 @@ const EditProject: React.FC = () => {
               {relationOptions}
             </FormSelect>
           </label>
-          <label htmlFor="relation">
+          <label htmlFor="type">
             <span>Project Type</span>
-            <FormSelect name="relation" id="relation" value={current.relation ?? ""}>
+            <FormSelect name="type" id="type" value={current.type ?? ""}>
               <option value="">-- Select Type --</option>
               {projectTypesOptions}
             </FormSelect>

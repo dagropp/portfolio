@@ -6,27 +6,25 @@ import Admin from "../pages/admin";
 import EditProject from "../pages/admin/EditProject";
 
 class NavService {
-  private readonly menuItems: MenuItemData<AppSection>[] = [
-    {id: "dev", path: "/", redirect: "/dev", hidden: true},
-    {id: "dev", title: "Dev", path: "/dev", component: Dev},
-    {id: "design", title: "Design", path: "/design", component: Design},
-    {id: "misc", title: "Misc.", path: "/misc", component: Misc},
-    {id: "about", title: "About", path: "/about", component: About},
-    {id: "admin", path: "/admin", component: Admin, hidden: true}
-  ];
 
-  private readonly adminMenuItems: MenuItemData<AdminSection>[] = [
-    // {id: "edit_experience", path: "/edit_experience", title: "Edit Experience"},
-    // {id: "edit_education", path: "/edit_education", title: "Edit Education"},
-    {id: "edit_project", path: "/admin/edit_project", title: "Edit Project", component: EditProject}
-  ]
-
-  public getMenuItems() {
-    return this.menuItems;
+  public get menuItems(): MenuItemData<AppSection>[] {
+    return [
+      {id: "dev", path: "/", redirect: "/dev", hidden: true},
+      {id: "dev", title: "Dev", path: "/dev", component: Dev},
+      {id: "design", title: "Design", path: "/design", component: Design},
+      {id: "misc", title: "Misc.", path: "/misc", component: Misc},
+      {id: "about", title: "About", path: "/about", component: About},
+      {id: "admin", path: "/admin", component: Admin, hidden: true},
+      // {id: "admin", path: "/admin", redirect: "/admin", hidden: true},
+    ];
   }
 
-  public getAdminMenuItems() {
-    return this.adminMenuItems;
+  public get adminMenuItems(): MenuItemData<AdminSection | AppSection>[] {
+    return [
+      // {id: "edit_experience", path: "/edit_experience", title: "Edit Experience"},
+      // {id: "edit_education", path: "/edit_education", title: "Edit Education"},
+      {id: "edit_project", path: "/admin/edit_project", title: "Edit Project", component: EditProject}
+    ]
   }
 
   public getPageKey(path: string): AppSection | null {
@@ -34,8 +32,8 @@ class NavService {
     return item?.id ?? null;
   }
 
-  public isPage(path: string, page: AppSection): boolean {
-    return this.getPageKey(path) === page;
+  public isPage(pathname: string, page: AppSection): boolean {
+    return this.getPageKey(pathname) === page;
   }
 }
 

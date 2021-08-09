@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useHistory} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {navService} from "../global/NavService";
 
 interface ContainerProps {
@@ -8,9 +8,9 @@ interface ContainerProps {
 
 const AppMenuItem: React.FC<ContainerProps> = ({item}) => {
 
-  const {location} = useHistory();
+  const {pathname} = useLocation();
   const {id, path, title} = item;
-  const customClass = navService.isPage(location.pathname, id) ? "active-page" : "";
+  const customClass = navService.isPage(pathname, id) ? "active-page" : "";
 
   return (
     <li className={`menu-list-item ${customClass}`}>

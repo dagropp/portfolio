@@ -1,6 +1,9 @@
 import React, {useEffect} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {navService} from "../../global/NavService";
+import PhotoUploadWrapper from "../../components/admin/photo-uploader/PhotoUploadWrapper";
+import PhotoUploadInput from "../../components/admin/photo-uploader/PhotoUploadInput";
+import PhotoUploadThumbnails from "../../components/admin/photo-uploader/PhotoUploadThumbnails";
 
 const Admin: React.FC = () => {
 
@@ -9,7 +12,7 @@ const Admin: React.FC = () => {
     return () => document.body.classList.remove("admin");
   }, [])
 
-  const menu = navService.getAdminMenuItems()
+  const menu = navService.adminMenuItems
     .filter((item) => !item.hidden)
     .map(({id, path, title}) =>
       <li key={id}>
@@ -19,7 +22,7 @@ const Admin: React.FC = () => {
       </li>
     )
 
-  const routes = navService.getAdminMenuItems()
+  const routes = navService.adminMenuItems
     .map(({id, path, component}) =>
       <Route
         key={id}
@@ -43,6 +46,7 @@ const Admin: React.FC = () => {
           {routes}
         </Switch>
       </Router>
+
     </section>
   )
 }

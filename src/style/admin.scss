@@ -17,7 +17,6 @@
     &::-webkit-calendar-picker-indicator {position: absolute;left: 112px;width: 390px;opacity: 0}
     option {background-color: #222;text-transform: capitalize;}
     &:focus {outline: none}
-    &.tag-input {padding-left: 40px}
   }
   select {text-transform: capitalize}
   textarea {resize: none;@include custom-scroll-bar(white);padding: 5px}
@@ -48,6 +47,9 @@
       background-color: transparent;
       &:hover {background-color: rgba(255, 255, 255, .3)}
     }
+  }
+  .tags-wrapper {display: inline-flex;flex-direction: column;
+    .input-wrapper {margin-bottom: 10px}
   }
 }
 

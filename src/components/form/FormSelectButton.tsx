@@ -2,12 +2,13 @@ import React, {ChangeEvent, EventHandler, HTMLProps, useEffect, useState} from "
 
 interface ContainerProps extends HTMLProps<HTMLInputElement> {
   checked: boolean;
+  display?: string;
   type: "checkbox" | "radio";
 }
 
 const FormSelectButton: React.FC<ContainerProps> = (props) => {
 
-  const {checked, onChange, ...rest} = props;
+  const {checked, display, onChange, ...rest} = props;
   const [inputChecked, setInputChecked] = useState(checked);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const FormSelectButton: React.FC<ContainerProps> = (props) => {
     <input
       onChange={handleChange}
       checked={inputChecked}
+      data-display={display || props.value}
       {...rest}
     />
   )

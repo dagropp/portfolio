@@ -15,7 +15,7 @@ const AppMenu: React.FC = () => {
     return () => window.removeEventListener("scroll", handler);
   }, [])
 
-  const items = navService.getMenuItems()
+  const items = navService.menuItems
     .filter((item) => !item.hidden)
     .map((item) =>
       <AppMenuItem

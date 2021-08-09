@@ -68,7 +68,7 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
         {npm && <a href={`https://www.npmjs.com/package/${npm}`} target="_blank" rel="noreferrer noopener">npm</a>}
       </div>
       <div className="tags-wrap">
-        {tags?.split(",").map((tag: string) => <span className="tag" key={tag}>#<AppIcon name={tag}/> {tag}</span>)}
+        {tags?.split(",").map((tag: string) => <span className="tag" key={tag}># {decodeURI(tag)}</span>)}
       </div>
       {relationCard && relationCard.dataset.meta_title &&
       <div

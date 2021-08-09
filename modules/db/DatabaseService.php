@@ -36,6 +36,12 @@ class DatabaseService
         return $query ? $query->fetch_all(MYSQLI_ASSOC) : [];
     }
 
+    public function voidSql(string $sql): bool
+    {
+        $query = $this->connection->query($sql);
+        return boolval($query);
+    }
+
     /**
      * @return mysqli
      */

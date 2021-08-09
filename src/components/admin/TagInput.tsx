@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
+import FormSelectButton from "../form/FormSelectButton";
 
 interface ContainerProps {
   currentTags: Nullable<string>;
@@ -14,21 +15,52 @@ const TagInput: React.FC<ContainerProps> = ({currentTags}) => {
     if (currentTags) setTags(currentTags.split(","))
   }, [currentTags])
 
+  const addTag = () => {
+    setTags(prevState => [...prevState, encodeURI(value)]);
+    setValue("");
+  }
+
+  const confirmRemove = (event: any) => {
+    if (!event.target.checked) {
+      const confirmation = window.confirm(`Are you sure you want to delete tag: ${event.target.dataset.display}`);
+      if (!confirmation) event.preventDefault();
+    }
+  }
+
+  const tagOptions = tags
+    .map((tag) =>
+      <FormSelectButton
+        type="checkbox"
+        name="tags"
+        key={tag}
+        value={tag}
+        checked={true}
+        display={decodeURI(tag)}
+        onClick={confirmRemove}
+      />
+    )
+
   return (
     <label htmlFor="dev_tools">
       <span>Project Tags</span>
-      <span className="input-wrapper">
-        <input
-          type="text"
-          className="tag-input"
-          ref={inputRef}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <button className="inner-button" type="button">Add +</button>
-      </span>
-      <div className="checkbox-wrapper">
-        {tags}
+      <div className="tags-wrapper">
+        <div className="input-wrapper">
+          <input
+            type="text"
+            className="tag-input"
+            ref={inputRef}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <button
+            className="inner-button"
+            type="button"
+            onClick={addTag}
+          >Add +</button>
+        </div>
+        <div className="checkbox-wrapper">
+          {tagOptions}
+        </div>
       </div>
     </label>
   )
