@@ -1,8 +1,13 @@
 import React, {useEffect, useState} from "react";
 import AppCard from "./AppCard";
 import UiService from "../../global/UiService";
-import AppIcon from "../AppIcon";
 import {useHistory} from "react-router-dom";
+import AppIcon from "../../icons/AppIcon";
+import ToolsList from "../lists/ToolsList";
+import LinkListItem from "../lists/LinkListItem";
+import LinksList from "../lists/LinksList";
+import NpmCounter from "../add-ons/NpmCounter";
+import CardDescription from "./CardDescription";
 
 interface ContainerProps {
   item: RestProject;
@@ -11,8 +16,8 @@ interface ContainerProps {
 const ProjectCard: React.FC<ContainerProps> = ({item}) => {
 
   const {
-    app_section, date_start, date_end, description, download_link, id, title, npm, site_link, tags, tools, type, github,
-    relation
+    app_section, date_start, date_end, description, download_link, id, title, npm, site_link, tags, tools, type,
+    github, skills, relation
   } = item;
   const [npmDownloads, setNpmDownloads] = useState(0);
   const [relationCard, setRelationCard] = useState<HTMLElement>();
@@ -54,19 +59,17 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
 
   return (
     <AppCard className={`project-card ${app_section}`} id={id}>
-      <AppIcon name={type}/>
       <h2>{title}</h2>
       <p>{year}</p>
-      {description && <p>{description}</p>}
-      {npmDownloads > 100 && <p className="bold underline">Total npm downloads {npmDownloads}</p>}
-      <p>{tools?.split(",").join(" | ")}</p>
-      <div className="links-wrap" hidden={!site_link && !download_link && !npm && !github}>
-        {site_link && <a href={site_link} target="_blank" rel="noreferrer noopener">Site</a>}
-        {download_link && <a href={download_link} download target="_blank" rel="noreferrer noopener">Download</a>}
-        {github &&
-        <a href={`https://github.com/dagropp/${github}`} target="_blank" rel="noreferrer noopener">GitHub</a>}
-        {npm && <a href={`https://www.npmjs.com/package/${npm}`} target="_blank" rel="noreferrer noopener">npm</a>}
-      </div>
+      <CardDescription description={description}/>
+      {npm && <NpmCounter packageName={npm}/>}
+      <ToolsList tools={tools}/>
+      <LinksList
+        site_link={site_link}
+        download_link={download_link}
+        github={github}
+        npm={npm}
+      />
       <div className="tags-wrap">
         {tags?.split(",").map((tag: string) => <span className="tag" key={tag}># {decodeURI(tag)}</span>)}
       </div>

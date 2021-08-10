@@ -1,3 +1,5 @@
+import AdminService from "./AdminService";
+
 class UiService {
   public static parseYears(start: string, end: Nullable<string>): string {
     return end ? end === start ? start : `${start}-${end}` : `${start}-`;
@@ -38,6 +40,36 @@ class UiService {
     const month = this.getMonthString(date);
     const day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
+  }
+
+  public static getToolsList(tools: string): AppIconType[] {
+    const list = tools.split(",") as AppDevToolKey[];
+    return list.filter((item) => item in AdminService.toolsList);
+  }
+
+  public static getDevToolsList(tools: string): AppIconType[] {
+    const list = tools.split(",") as AppDevToolKey[];
+    return list.filter((item) => item in AdminService.toolsList);
+  }
+
+  public static formatNumber(number: number): string {
+    number = Math.round(number);
+    if (number < 1_000) {
+      return number.toString();
+    } else if (number < 1_000_000) {
+      return (number / 1_000).toFixed(1) + "k";
+    } else {
+      return (number / 1_000_000).toFixed(1) + "m";
+    }
+  }
+
+  public static parseRichTextToHtml(data: string) {
+    data = data.replace(/\*.*?\*/mg, (match: string) =>
+      `<strong>${match.substring(1, match.length - 1)}</strong>`)
+    data = data.replace(/_.*?_/mg, (match: string) =>
+      `<span class="italic">${match.substring(1, match.length - 1)}</span>`)
+
+    return {__html: data}
   }
 
   private static getMonthString(date: Date): string {

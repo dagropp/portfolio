@@ -23,6 +23,7 @@ const newProject: RestProject = {
   tags: null,
   title: "",
   tools: null,
+  skills: null,
   type: ""
 }
 
@@ -130,7 +131,7 @@ const EditProject: React.FC = () => {
     >{entry}</option>
   )
 
-  const devToolsOptions = Object.entries(AdminService.devToolsList)
+  const devToolsOptions = Object.entries(AdminService.toolsList)
     .map(([key, value]) =>
       <FormSelectButton
         type="checkbox"

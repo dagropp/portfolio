@@ -6,7 +6,42 @@ require_once "../db/Parser.php";
 $post = Parser::post(false);
 
 if ($post->is_new) {
-    $sql = "";
+    $sql = "
+        INSERT INTO `projects` (
+            `id`, 
+            `app_section`,
+            `title`,
+            `type`,
+            `relation`,
+            `date_start`, 
+            `date_end`,
+            `site_link`, 
+            `download_link`, 
+            `github`, 
+            `npm`, 
+            `description`,
+            `tools`, 
+            `skills`,
+            `tags`
+            ) 
+        VALUES (
+            '$post->id', 
+            '$post->app_section', 
+            '$post->title', 
+            '$post->type',
+            '$post->relation',
+            '$post->date_start',
+            '$post->date_end',
+            '$post->site_link',
+            '$post->download_link', 
+            '$post->github', 
+            '$post->npm', 
+            '$post->description', 
+            '$post->tools',
+            '$post->skills',
+            '$post->tags'
+            )
+    ";
 } else {
     $sql = "
         UPDATE `projects` 
@@ -22,6 +57,7 @@ if ($post->is_new) {
             `npm` = '$post->npm', 
             `description` = '$post->description', 
             `tools` = '$post->tools', 
+            `skills` = '$post->skills', 
             `tags` = '$post->tags' 
         WHERE `projects`.`id` = '$post->id'
     ";

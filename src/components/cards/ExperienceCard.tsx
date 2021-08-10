@@ -1,7 +1,8 @@
 import React from "react";
 import AppCard from "./AppCard";
 import UiService from "../../global/UiService";
-import AppIcon from "../AppIcon";
+import LinksList from "../lists/LinksList";
+import ToolsList from "../lists/ToolsList";
 
 interface ContainerProps {
   item: RestExperience;
@@ -17,13 +18,13 @@ const ExperienceCard: React.FC<ContainerProps> = ({item}) => {
       <h3>{company}</h3>
       <p>{year}</p>
       {description && <p>{description}</p>}
-      <p>{tools?.split(",").join(" | ")}</p>
-      <div className="links-wrap" hidden={!link && !app_link}>
-        {link && <a href={link} target="_blank" rel="noreferrer noopener">Company Site</a>}
-        {app_link && <a href={app_link} target="_blank" rel="noreferrer noopener">Company App</a>}
-      </div>
+      <ToolsList tools={tools}/>
+      <LinksList
+        site_link={link}
+        app_link={app_link}
+      />
       <div className="tags-wrap">
-        {tags?.split(",").map((tag: string) => <span className="tag" key={tag}>#<AppIcon name={tag}/> {tag}</span>)}
+        {tags?.split(",").map((tag: string) => <span className="tag" key={tag}># {tag}</span>)}
       </div>
     </AppCard>
   )

@@ -39,6 +39,7 @@ interface RestProject {
   tags: Nullable<string>;
   title: string;
   tools: Nullable<string>;
+  skills: Nullable<string>;
   type: string;
 }
 

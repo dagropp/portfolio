@@ -12,11 +12,10 @@ interface MenuItemData<T> {
 
 type Nullable<T> = T | null;
 
-interface RestCollection<T> {
-  [id: string]: T;
+type RestCollection<T, U = string> = {
+  [id in U]: T;
 }
 
 interface DevTool {
   display: string;
-  icon: string;
 }

@@ -1,0 +1,29 @@
+@import "mixins";
+
+.app-card {
+  .links-wrap {
+    a {text-decoration: none}
+  }
+}
+
+.list-wrap {display: flex;flex-wrap: wrap;margin: 15px 0;
+  li + li {margin-left: 10px}
+  .icon-wrapper {display: flex;align-items: center;transition: all .3s ease-in-out;
+    @include increase-click-area(-10px);z-index: 1;filter: grayscale(1) contrast(0) brightness(.5);
+    svg {height: 25px;min-width: 25px;position: relative;z-index: 1}
+    &::after {content: " ";background-color: rgba(49, 49, 49, 0.95);border-radius: 50%;opacity: 0;
+      transition: opacity .3s ease-in-out}
+    &:hover {transform: scale(1.2);z-index: 2;filter: none;
+      svg {z-index: 10}
+      &::after {opacity: 1}
+    }
+  }
+}
+
+.npm-counter {margin: 15px 0;text-decoration: none;font-style: italic;
+  filter: grayscale(1) contrast(0) brightness(.5);transition: filter .3s ease-in-out;
+  .icon-wrapper {margin-right: 10px}
+  &:hover {filter: none;
+    .icon-wrapper {filter: none}
+  }
+}

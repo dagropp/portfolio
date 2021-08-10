@@ -49,5 +49,11 @@
   &::-webkit-scrollbar-thumb {background-color: $color;}
 }
 
+@mixin primary-color($alpha: 1) {
+  color: rgba(49, 49, 49, $alpha);
+}
+
 $app-width-desktop: 1080px;
+$primary-color: rgb(49, 49, 49);
+
 $link-color: #FFCC70;

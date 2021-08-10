@@ -1,9 +1,6 @@
 import React, {useEffect} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {navService} from "../../global/NavService";
-import PhotoUploadWrapper from "../../components/admin/photo-uploader/PhotoUploadWrapper";
-import PhotoUploadInput from "../../components/admin/photo-uploader/PhotoUploadInput";
-import PhotoUploadThumbnails from "../../components/admin/photo-uploader/PhotoUploadThumbnails";
 
 const Admin: React.FC = () => {
 
