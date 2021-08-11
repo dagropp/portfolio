@@ -19,3 +19,15 @@ type RestCollection<T, U = string> = {
 interface DevTool {
   display: string;
 }
+
+interface FormListProps<T> {
+  id: string;
+  title?: string;
+  defaultValue: Nullable<string>;
+  options: any[];
+  defaultOption?: string;
+  className?: string;
+  itemMap?: { value: string; display: string; }
+  required?: boolean;
+  onChange?: EventHandler<ChangeEvent<T>>;
+}

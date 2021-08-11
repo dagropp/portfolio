@@ -8,6 +8,7 @@ import TypeUtils from "../../global/TypeUtils";
 import AdminService from "../../global/AdminService";
 import FormSelectButton from "../../components/form/FormSelectButton";
 import TagInput from "../../components/admin/TagInput";
+import SelectOptionsList from "../../components/admin/SelectOptionsList";
 
 const newProject: RestProject = {
   app_section: "",
@@ -103,34 +104,6 @@ const EditProject: React.FC = () => {
     {id: "npm"}
   ]
 
-  const currentProjects = projects.map(({id, title, app_section}) =>
-    <option
-      key={id}
-      value={id}
-    >{title}</option>
-  )
-
-  const relationOptions = dataList.map(({id, title, section}) =>
-    <option
-      key={id}
-      value={id}
-    >{section}: {title}</option>
-  )
-
-  const appSectionOptions = AdminService.appSections.map((entry) =>
-    <option
-      key={entry}
-      value={entry}
-    >{entry}</option>
-  )
-
-  const projectTypesOptions = AdminService.projectTypes.map((entry) =>
-    <option
-      key={entry}
-      value={entry}
-    >{entry}</option>
-  )
-
   const devToolsOptions = Object.entries(AdminService.toolsList)
     .map(([key, value]) =>
       <FormSelectButton
@@ -172,38 +145,41 @@ const EditProject: React.FC = () => {
   return (
     <section className="admin-form-wrapper">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="current_project">
-          <span>Select Project</span>
-          <FormSelect name="current_project" id="current_project" value="" onChange={switchProject}>
-            <option value="">New Project</option>
-            {currentProjects}
-          </FormSelect>
-        </label>
+        <SelectOptionsList
+          id="current_project"
+          title="Select Project"
+          defaultValue=""
+          defaultOption="New Project"
+          options={projects}
+          itemMap={{value: "id", display: "title"}}
+          onChange={switchProject}
+        />
         <div className="form-inner">
           <h3 className="form-title"><span className="action">{isNew ? "Add" : "Edit"} Project</span> <span
             className="title">{current.title}</span></h3>
           {dataInputs}
-          <label htmlFor="app_section">
-            <span>App Section</span>
-            <FormSelect name="app_section" id="app_section" value={current.app_section} required>
-              <option value="">-- Select App Section --</option>
-              {appSectionOptions}
-            </FormSelect>
-          </label>
-          <label htmlFor="relation">
-            <span>Project Relation</span>
-            <FormSelect name="relation" id="relation" value={current.relation ?? ""}>
-              <option value="">-- Select Relation --</option>
-              {relationOptions}
-            </FormSelect>
-          </label>
-          <label htmlFor="type">
-            <span>Project Type</span>
-            <FormSelect name="type" id="type" value={current.type ?? ""}>
-              <option value="">-- Select Type --</option>
-              {projectTypesOptions}
-            </FormSelect>
-          </label>
+          <SelectOptionsList
+            id="app_section"
+            title="App Section"
+            defaultValue={current.app_section}
+            defaultOption="Select App Section"
+            options={AdminService.appSections}
+          />
+          <SelectOptionsList
+            id="relation"
+            title="Project Relation"
+            defaultValue={current.relation}
+            defaultOption="Select Relation"
+            options={dataList}
+            itemMap={{value: "id", display: "title"}}
+          />
+          <SelectOptionsList
+            id="type"
+            title="Project Type"
+            defaultValue={current.type}
+            defaultOption="Select Type"
+            options={AdminService.projectTypes}
+          />
           <label>
             <span>Dev Tools</span>
             <div className="checkbox-wrapper">
