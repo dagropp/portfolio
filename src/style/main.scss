@@ -1,9 +1,11 @@
 @import "mixins";
 @import "animation";
 
-body {@include linear-gradient(#4158D0, 43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);background-repeat: no-repeat;
-  min-height: 100vh;transition: all .3s ease-in-out;overflow-y: scroll;
+body {
+  @include linear-gradient(#4158D0, 43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);background-repeat: no-repeat;
+  overflow-y: scroll;min-height: 100vh;
   &.admin {@include linear-gradient(#444, 43deg, #444 0%, #333 46%, #222 100%)}
+  &.disable-scroll {overflow: hidden;padding-right: 17px}
 }
 
 section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 0;animation: fade-in .3s ease-in;
@@ -14,19 +16,6 @@ section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 
 }
 
 .dev-wrapper {columns: 3;column-gap: 15px;}
-
-.app-card {background-color: rgba(255, 255, 255, .15);border-radius: 10px;@include restrict-width(350px);padding: 15px;
-  @include break-inside(avoid);
-  .tags-wrap {
-    .tag {color: white;cursor: pointer;user-select: none;transition: all .3s ease-in-out;
-      + .tag {margin-left: 10px;}
-      &:hover {text-decoration: underline;background-color: #FFCC70;color: #C850C0}
-      &::selection, span::selection {background-color: #FFCC70;color: #C850C0}
-    }
-
-  }
-  + .app-card {margin-top: 15px}
-}
 
 .icon-wrapper {cursor: pointer;//filter: grayscale(1) contrast(0) brightness(.5);
   svg {

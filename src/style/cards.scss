@@ -1,9 +1,21 @@
 @import "mixins";
 
-.app-card {
+.app-card {background-color: rgba(255, 255, 255, .15);border-radius: 10px;@include restrict-width(350px);padding: 15px;
+  cursor: pointer;@include break-inside(avoid);position: relative;overflow: hidden;
+  .tags-wrap {
+    .tag {color: white;cursor: pointer;user-select: none;transition: all .3s ease-in-out;
+      + .tag {margin-left: 10px;}
+      &:hover {text-decoration: underline;background-color: #FFCC70;color: #C850C0}
+      &::selection, span::selection {background-color: #FFCC70;color: #C850C0}
+    }
+  }
   .links-wrap {
     a {text-decoration: none}
   }
+  &::after {content: " ";@include full-spread;background-color: rgba(255, 255, 255, 0.2);z-index: 1;opacity: 0;
+    transition: opacity .2s linear}
+  &:hover::after {opacity: 1}
+  + .app-card {margin-top: 15px}
 }
 
 .list-wrap {display: flex;flex-wrap: wrap;margin: 15px 0;
@@ -26,4 +38,8 @@
   &:hover {filter: none;
     .icon-wrapper {filter: none}
   }
+}
+
+.content-card-popup {
+  @include full-spread(fixed);max-width: none;width: 100%;background-color: white;z-index: 2
 }

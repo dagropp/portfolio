@@ -12,6 +12,16 @@ class ServerService {
     return await response.json();
   }
 
+  public static async postForm(path: string, formData: FormData) {
+    const request = new Request(this.controller(path), {
+        method: "POST",
+        body: formData
+      }
+    );
+    const response = await fetch(request);
+    return await response.json();
+  }
+
   public static async get<T, U = any>(path: string, queries?: T): Promise<U> {
     const queryString = queries ? "?" + Object.entries(queries).map(([key, value]) => `${key}=${value}`).join("&") : "";
     const response: Response = await fetch(this.controller(path) + queryString);
@@ -36,7 +46,7 @@ class ServerService {
   }
 
   public static async getRelationDataList() {
-    return this.get<null, RestDataListResponse[]>("fetch_data_list");
+    return this.get<null, RestCollection<RestDataListResponse[]>>("fetch_data_list");
   }
 
   private static controller = (path: string) => ServerService.CONTROLLER_PATH + path + ".php";

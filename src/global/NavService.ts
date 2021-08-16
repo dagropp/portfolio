@@ -4,6 +4,7 @@ import Misc from "../pages/Misc";
 import About from "../pages/About";
 import Admin from "../pages/admin";
 import EditProject from "../pages/admin/EditProject";
+import EditCodeSnippet from "../pages/admin/EditCodeSnippet";
 
 class NavService {
 
@@ -21,9 +22,8 @@ class NavService {
 
   public get adminMenuItems(): MenuItemData<AdminSection | AppSection>[] {
     return [
-      // {id: "edit_experience", path: "/edit_experience", title: "Edit Experience"},
-      // {id: "edit_education", path: "/edit_education", title: "Edit Education"},
-      {id: "edit_project", path: "/admin/edit_project", title: "Edit Project", component: EditProject}
+      {id: "edit_project", path: "/admin/edit_project", title: "Edit Project", component: EditProject},
+      {id: "edit_code_snippet", path: "/admin/edit_code_snippet", title: "Edit Code Snippet", component: EditCodeSnippet}
     ]
   }
 

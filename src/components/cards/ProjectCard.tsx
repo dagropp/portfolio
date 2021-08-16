@@ -8,6 +8,8 @@ import LinkListItem from "../lists/LinkListItem";
 import LinksList from "../lists/LinksList";
 import NpmCounter from "../add-ons/NpmCounter";
 import CardDescription from "./CardDescription";
+import CodeSnippet from "../content-sections/CodeSnippet";
+import ContentCardPopup from "../popup/ContentCardPopup";
 
 interface ContainerProps {
   item: RestProject;
@@ -21,6 +23,7 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
   } = item;
   const [npmDownloads, setNpmDownloads] = useState(0);
   const [relationCard, setRelationCard] = useState<HTMLElement>();
+  const [expand, setExpand] = useState(false);
   const year = UiService.parseMonths(date_start, date_end);
   const history = useHistory();
 
@@ -56,29 +59,43 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
     // animation?.finished.then(() => window.location.hash = "")
   }
 
-
   return (
-    <AppCard className={`project-card ${app_section}`} id={id}>
-      <h2>{title}</h2>
-      <p>{year}</p>
-      <CardDescription description={description}/>
-      {npm && <NpmCounter packageName={npm}/>}
-      <ToolsList tools={tools}/>
-      <LinksList
-        site_link={site_link}
-        download_link={download_link}
-        github={github}
-        npm={npm}
-      />
-      <div className="tags-wrap">
-        {tags?.split(",").map((tag: string) => <span className="tag" key={tag}># {decodeURI(tag)}</span>)}
-      </div>
-      {relationCard && relationCard.dataset.meta_title &&
-      <div
+    <>
+      <AppCard
+        className={`project-card ${app_section}`}
+        id={id}
+        onClick={() => setExpand(true)}
+      >
+        <h2>{title}</h2>
+        <p>{year}</p>
+        <CardDescription description={description}/>
+        {npm && <NpmCounter packageName={npm}/>}
+        <ToolsList tools={tools}/>
+        <LinksList
+          site_link={site_link}
+          download_link={download_link}
+          github={github}
+          npm={npm}
+        />
+        <div className="tags-wrap">
+          {tags?.split(",").map((tag: string) => <span className="tag" key={tag}># {decodeURI(tag)}</span>)}
+        </div>
+        {relationCard && relationCard.dataset.meta_title &&
+        <div
           className=""
           onClick={highlightRelationCard}
-      >As a part of: <span className="italic">{relationCard.dataset.meta_title}</span></div>}
-    </AppCard>
+        >As a part of: <span className="italic">{relationCard.dataset.meta_title}</span></div>}
+        <CodeSnippet
+          fileName="LinkedList.js"
+          github="hadasim/blob/master/src/react-component/admin/gallery/DraggableImage.jsx"
+        />
+      </AppCard>
+      <ContentCardPopup
+        project={item}
+        isOpen={expand}
+        setIsOpen={setExpand}
+      />
+    </>
   )
 }
 

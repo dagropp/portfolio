@@ -1,7 +1,6 @@
 import React, {ChangeEvent, EventHandler, FormEvent, useEffect, useState} from "react";
 import ServerService from "../../global/ServerService";
 import UiService from "../../global/UiService";
-import FormSelect from "../../components/form/FormSelect";
 import FormInput from "../../components/form/FormInput";
 import FormTextarea from "../../components/form/FormTextarea";
 import TypeUtils from "../../global/TypeUtils";
@@ -9,6 +8,8 @@ import AdminService from "../../global/AdminService";
 import FormSelectButton from "../../components/form/FormSelectButton";
 import TagInput from "../../components/admin/TagInput";
 import SelectOptionsList from "../../components/admin/SelectOptionsList";
+import SelectRelation from "../../components/admin/SelectRelation";
+import FormLabel from "../../components/form/FormLabel";
 
 const newProject: RestProject = {
   app_section: "",
@@ -31,18 +32,12 @@ const newProject: RestProject = {
 const EditProject: React.FC = () => {
 
   const [projects, setProjects] = useState<RestProject[]>([]);
-  const [dataList, setDataList] = useState<RestDataListResponse[]>([]);
   const [current, setCurrent] = useState<RestProject>(newProject);
   const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
-    Promise.allSettled([
-      ServerService.getRelationDataList(),
-      ServerService.getTable<RestProject>("projects")
-    ]).then(([dataList, projects]) => {
-      if (dataList.status === "fulfilled") setDataList(dataList.value);
-      if (projects.status === "fulfilled") setProjects(projects.value);
-    })
+    ServerService.getTable<RestProject>("projects")
+      .then(setProjects);
   }, [])
 
   const switchProject: EventHandler<ChangeEvent<HTMLSelectElement>> = (event) => {
@@ -133,12 +128,17 @@ const EditProject: React.FC = () => {
     const value = current[id] ?? "";
 
     return (
-      <label key={id} htmlFor={id} className={required ? "required" : ""}>
-        <span>{title} {required && "*"}</span>
+      <FormLabel
+        key={id}
+        htmlFor={id}
+        title={title}
+        required={required}
+        readOnly={readOnly}
+      >
         {React.createElement(component, {
           required, type, id, readOnly, onChange, value, name: id, placeholder: "Add value..."
         })}
-      </label>
+      </FormLabel>
     )
   })
 
@@ -155,7 +155,7 @@ const EditProject: React.FC = () => {
           onChange={switchProject}
         />
         <div className="form-inner">
-          <h3 className="form-title"><span className="action">{isNew ? "Add" : "Edit"} Project</span> <span
+          <h3 className="form-title"><span className="action">{isNew ? "Add" : "Edit"} Project:</span> <span
             className="title">{current.title}</span></h3>
           {dataInputs}
           <SelectOptionsList
@@ -164,14 +164,7 @@ const EditProject: React.FC = () => {
             defaultValue={current.app_section}
             defaultOption="Select App Section"
             options={AdminService.appSections}
-          />
-          <SelectOptionsList
-            id="relation"
-            title="Project Relation"
-            defaultValue={current.relation}
-            defaultOption="Select Relation"
-            options={dataList}
-            itemMap={{value: "id", display: "title"}}
+            required
           />
           <SelectOptionsList
             id="type"
@@ -179,6 +172,11 @@ const EditProject: React.FC = () => {
             defaultValue={current.type}
             defaultOption="Select Type"
             options={AdminService.projectTypes}
+            required
+          />
+          <SelectRelation
+            title="Project Relation"
+            value={current.relation}
           />
           <label>
             <span>Dev Tools</span>

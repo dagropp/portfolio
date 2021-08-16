@@ -1,5 +1,6 @@
 import React from "react";
 import FormSelect from "../form/FormSelect";
+import FormLabel from "../form/FormLabel";
 
 const SelectOptionsList: React.FC<FormListProps<HTMLSelectElement>> = (props) => {
 
@@ -19,7 +20,11 @@ const SelectOptionsList: React.FC<FormListProps<HTMLSelectElement>> = (props) =>
   });
 
   return (
-    <label htmlFor={id} className={className}>
+    <FormLabel
+      className={className}
+      htmlFor={id}
+      required={required}
+    >
       {title && <span>{title}</span>}
       <FormSelect
         name={id}
@@ -32,7 +37,7 @@ const SelectOptionsList: React.FC<FormListProps<HTMLSelectElement>> = (props) =>
         <option value="">{defaultOption}</option>}
         {items}
       </FormSelect>
-    </label>
+    </FormLabel>
   )
 }
 

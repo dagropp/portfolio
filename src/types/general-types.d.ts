@@ -1,5 +1,5 @@
 type AppSection = "dev" | "design" | "about" | "misc" | "admin";
-type AdminSection = "edit_project" | "edit_experience" | "edit_education";
+type AdminSection = "edit_project" | "edit_code_snippet" | "edit_experience" | "edit_education";
 
 interface MenuItemData<T> {
   id: T;
@@ -31,3 +31,5 @@ interface FormListProps<T> {
   required?: boolean;
   onChange?: EventHandler<ChangeEvent<T>>;
 }
+
+type ProgrammingLanguage = "css" | "html" | "java" | "js" | "jsx" | "php" | "py" | "sql" | "tsx" | "ts";

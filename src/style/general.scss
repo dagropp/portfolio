@@ -1,11 +1,17 @@
 @import "mixins";
 
 /* General */
-* {font-family: "IBM Plex Sans", sans-serif;margin: 0;padding: 0;box-sizing: border-box}
+* {margin: 0;padding: 0;box-sizing: border-box;
+  &::selection {background-color: #FFCC70;color: #C850C0}
+}
+
+* {font-family: "IBM Plex Sans", sans-serif}
 
 li {list-style: none}
 
-a {color: $link-color}
+a {color: $link-color;cursor: pointer;
+  &:hover {text-decoration: underline}
+}
 
 h2, h3, h4, h5, h6 {font-weight: 600}
 
@@ -59,3 +65,5 @@ p {font-size: 16px}
 .fz12 {font-size: 12px}
 
 .black {color: black}
+
+a.dismiss {color: $primary-color}

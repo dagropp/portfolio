@@ -56,7 +56,6 @@ interface RestDataResponse {
 
 interface RestDataListResponse {
   id: string;
-  section: string;
   title: string;
 }
 

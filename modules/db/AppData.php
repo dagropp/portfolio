@@ -23,27 +23,20 @@ class AppData
 
     public static function getSectionDataList(): array
     {
-        $result = [];
-
         $education = DatabaseService::instance()->runSql("SELECT `id`, `title`, `institution` FROM `education`");
-        $experience = DatabaseService::instance()->runSql("SELECT `id`, `position`, `company` FROM `experience`");
+        $experience = DatabaseService::instance()->runSql("SELECT `id`, `position` as `title`, `company` FROM `experience`");
+        $projects = DatabaseService::instance()->runSql("SELECT `id`, `title` FROM `projects`");
 
-        foreach ($education as $entry) {
-            array_push($result, [
-                "section" => "Education",
-                "id" => $entry["id"],
-                "title" => $entry["title"] . ", " . $entry["institution"]
-            ]);
+        foreach ($education as $key => $item) {
+            $education[$key]['title'] = $item['title'] . ', ' . $item['institution'];
+            unset($education[$key]['institution']);
         }
 
-        foreach ($experience as $entry) {
-            array_push($result, [
-                "section" => "Experience",
-                "id" => $entry["id"],
-                "title" => $entry["position"] . ", " . $entry["company"]
-            ]);
+        foreach ($experience as $key => $item) {
+            $experience[$key]['title'] = $item['title'] . ', ' . $item['company'];
+            unset($experience[$key]['company']);
         }
 
-        return $result;
+        return ['Education' => $education, 'Experience' => $experience, 'Projects' => $projects];
     }
 }

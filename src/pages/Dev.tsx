@@ -21,7 +21,7 @@ const Dev: React.FC = () => {
         setExperience(UiService.sortByField(experience, "year_start"));
         setProjects(UiService.sortByField(projects, "date_start"));
       })
-      .finally(() => setLoading(false));
+      .finally(() => setTimeout(() => setLoading(false), 500));
   }, [])
 
   return (
@@ -31,16 +31,13 @@ const Dev: React.FC = () => {
       </section>
       <section className="dev-wrapper" hidden={loading}>
         <article className="experience">
-          <h2>Experience</h2>
-          {experience.map(item => <ExperienceCard key={item.id} item={item}/>)}
+          {experience.map((item) => <ExperienceCard key={item.id} item={item}/>)}
         </article>
         <article className="education">
-          <h2>Education</h2>
-          {education.map(item => <EducationCard key={item.id} item={item}/>)}
+          {education.map((item) => <EducationCard key={item.id} item={item}/>)}
         </article>
         <article className="projects">
-          <h2>Projects</h2>
-          {projects.map(item => <ProjectCard key={item.id} item={item}/>)}
+          {projects.map((item) => <ProjectCard key={item.id} item={item}/>)}
         </article>
       </section>
     </>
