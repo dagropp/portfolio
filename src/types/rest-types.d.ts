@@ -54,9 +54,17 @@ interface RestDataResponse {
   other: any[];
 }
 
+interface RestCodeSnippet {
+  description: Nullable<string>;
+  github: string;
+  id: string;
+  name: string;
+  relation: string;
+}
+
 interface RestDataListResponse {
   id: string;
   title: string;
 }
 
-type DataBaseSectionTable = "education" | "projects" | "experience" | "other";
+type DataBaseSectionTable = "education" | "projects" | "experience" | "other" | "code_snippets";

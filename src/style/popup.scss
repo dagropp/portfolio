@@ -1,9 +1,9 @@
 @import "mixins";
 @import "animation";
 
-.app-overlay {@include full-spread(fixed);z-index: 5;backdrop-filter: blur(5px) brightness(0.4);
-  opacity: 0;transition: opacity .3s ease-in-out;pointer-events: none;
+.app-overlay {@include full-spread(fixed);z-index: 5;opacity: 0;transition: opacity .3s linear;pointer-events: none;
   &.is-open {opacity: 1;pointer-events: auto}
+  &:not(.transparent) {backdrop-filter: blur(5px) brightness(0.4)}
 }
 
 .app-popup {background-color: rgba(255, 255, 255, 0.5);box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);color: $primary-color;
@@ -11,7 +11,7 @@
   h2 {font-family: 'Merriweather', serif;font-size: 22px}
 }
 
-.contact-popup {
+.contact-popup {cursor: auto;
   .message-wrap {
     input, textarea {display: block;width: 100%;border-radius: 10px;border: 1px solid $primary-color;
       outline: none;min-height: 40px;background-color: transparent;color: $primary-color;margin-top: 20px;
@@ -38,4 +38,12 @@
     }
     a.dismiss {margin-top: 20px;display: inline-block;font-size: 14px;}
   }
+}
+
+.content-popup {position: fixed;top: 77px;height: 684px;border-radius: 10px;width: 1080px;max-width: none;
+  background-color: #E093B9;
+}
+
+.app-overlay.is-open {
+  .content-popup {animation: scale-in-card 0.7s ease-in}
 }

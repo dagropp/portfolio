@@ -70,7 +70,6 @@ const ContactPopup: React.FC = () => {
               name="email"
               id="email"
               type="email"
-              placeholder="Your Email"
               onChange={handleEmailChange}
             />
           </label>
@@ -84,7 +83,6 @@ const ContactPopup: React.FC = () => {
               name="message"
               id="message"
               rows={5}
-              placeholder="Leave a Message"
               onChange={handleMessageChange}
             />
           </label>

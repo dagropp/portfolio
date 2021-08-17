@@ -7,40 +7,8 @@ $post = Parser::post(false);
 
 if ($post->is_new) {
     $sql = "
-        INSERT INTO `projects` (
-            `id`, 
-            `app_section`,
-            `title`,
-            `type`,
-            `relation`,
-            `date_start`, 
-            `date_end`,
-            `site_link`, 
-            `download_link`, 
-            `github`, 
-            `npm`, 
-            `description`,
-            `tools`, 
-            `skills`,
-            `tags`
-            ) 
-        VALUES (
-            '$post->id', 
-            '$post->app_section', 
-            '$post->title', 
-            '$post->type',
-            '$post->relation',
-            '$post->date_start',
-            '$post->date_end',
-            '$post->site_link',
-            '$post->download_link', 
-            '$post->github', 
-            '$post->npm', 
-            '$post->description', 
-            '$post->tools',
-            '$post->skills',
-            '$post->tags'
-            )
+        INSERT INTO `projects` (`id`, `app_section`, `title`, `type`, `relation`, `date_start`, `date_end`, `site_link`, `download_link`, `github`, `npm`, `description`, `tools`, `skills`, `tags`) 
+        VALUES ('$post->id', '$post->app_section', '$post->title', '$post->type', '$post->relation', '$post->date_start', '$post->date_end', '$post->site_link', '$post->download_link', '$post->github', '$post->npm', '$post->description', '$post->tools', '$post->skills', '$post->tags')
     ";
 } else {
     $sql = "
@@ -65,4 +33,4 @@ if ($post->is_new) {
 
 $response = DatabaseService::instance()->voidSql($sql);
 
-echo json_encode(['success' => $response]);
+echo json_encode(['is_new' => $post->is_new]);

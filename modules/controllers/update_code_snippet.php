@@ -8,18 +8,19 @@ $response = false;
 if (isset($_FILES['code_file'])) {
     $code_file = $_FILES['code_file'];
     $name = $code_file['name'];
-    $path = '/portofolio/public/assets/code-snippets';
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/code_snippets';
     $relation = $_POST['relation'];
     $github = $_POST['github'];
+    $description = $_POST['description'];
 
     $sql = "
-    INSERT INTO `code_snippets` (`id`, `relation`, `name`, `github`)
-    VALUES (NULL, '$relation', '$name', '$github')
+    INSERT INTO `code_snippets` (`id`, `relation`, `name`, `github`, `description`)
+    VALUES (NULL, '$relation', '$name', '$github', '$description')
     ";
 
-    $query = DatabaseService::instance()->voidSql($sql);
-    $write = file_put_contents("$path/$name", $code_file);
-    $response = $query && $write > 0;
+    $didAddToDb = DatabaseService::instance()->voidSql($sql);
+    $didWrite = move_uploaded_file($code_file['tmp_name'], "$path/$name");
+    $response = $didAddToDb && $didWrite;
 }
 
-echo json_encode(['response' => $response]);
+echo json_encode(['response' => $response, 'is_writable' => is_writable($_SERVER['DOCUMENT_ROOT'] . '/code_snippets')]);

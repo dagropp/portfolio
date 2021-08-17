@@ -12,8 +12,8 @@ class NavService {
     return [
       {id: "dev", path: "/", redirect: "/dev", hidden: true},
       {id: "dev", title: "Dev", path: "/dev", component: Dev},
-      {id: "design", title: "Design", path: "/design", component: Design},
-      {id: "misc", title: "Misc.", path: "/misc", component: Misc},
+      // {id: "design", title: "Design", path: "/design", component: Design},
+      // {id: "misc", title: "Misc.", path: "/misc", component: Misc},
       {id: "about", title: "About", path: "/about", component: About},
       {id: "admin", path: "/admin", component: Admin, hidden: true},
       // {id: "admin", path: "/admin", redirect: "/admin", hidden: true},

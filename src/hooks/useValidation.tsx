@@ -22,8 +22,8 @@ const useValidation = (options: ValidationHookOptions = {}): ValidationHookValue
 
   const handleChange: EventHandler<ChangeEvent<HTMLTextElement>> = (event) => {
     const {value} = event.target;
-    const isFnValid = validationFn?.(value) ?? true;
-    const isRegexpValid = regexp?.test(value) ?? true;
+    const isFnValid = validationFn?.(value) ?? false;
+    const isRegexpValid = regexp?.test(value) ?? false;
     setIsValid(isFnValid || isRegexpValid);
   }
 

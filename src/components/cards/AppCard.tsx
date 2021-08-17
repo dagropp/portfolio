@@ -1,20 +1,16 @@
-import React, {MouseEventHandler} from "react";
+import React, {HTMLProps, MouseEventHandler} from "react";
 
-interface ContainerProps {
-  id: string;
-  className?: string;
+interface ContainerProps extends HTMLProps<HTMLDivElement> {
   metaTitle?: string;
-  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-const AppCard: React.FC<ContainerProps> = ({children, id, metaTitle, className = "", onClick}) => {
+const AppCard: React.FC<ContainerProps> = ({children, metaTitle, className = "", ...rest}) => {
 
   return (
     <div
       className={`app-card ${className}`}
-      id={id}
       data-meta_title={metaTitle}
-      onClick={onClick}
+      {...rest}
     >
       <div className="app-card-inner">
         {children}

@@ -19,7 +19,7 @@ class UiService {
       }
       return `${monthStart}/${dateStart.getFullYear()}`;
     }
-    return `${monthStart}-${dateStart.getFullYear()}`;
+    return `${monthStart}/${dateStart.getFullYear()} -`;
   }
 
   public static async getTotalNpmDownloads(packageName: string): Promise<number> {

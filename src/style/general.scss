@@ -2,14 +2,14 @@
 
 /* General */
 * {margin: 0;padding: 0;box-sizing: border-box;
-  &::selection {background-color: #FFCC70;color: #C850C0}
+  &::selection {background-color: rgba(255, 204, 112, .8);color: #C850C0}
 }
 
 * {font-family: "IBM Plex Sans", sans-serif}
 
 li {list-style: none}
 
-a {color: $link-color;cursor: pointer;
+a {color: $link-color;text-decoration: none;cursor: pointer;
   &:hover {text-decoration: underline}
 }
 
@@ -49,8 +49,6 @@ p {font-size: 16px}
 .flex-1 {flex: 1}
 
 .light-box {@include full-spread(fixed)}
-
-.line-spacer {width: 100%}
 
 .ellipsis {white-space: nowrap;overflow: hidden;text-overflow: ellipsis}
 

@@ -5,7 +5,7 @@ body {
   @include linear-gradient(#4158D0, 43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);background-repeat: no-repeat;
   overflow-y: scroll;min-height: 100vh;
   &.admin {@include linear-gradient(#444, 43deg, #444 0%, #333 46%, #222 100%)}
-  &.disable-scroll {overflow: hidden;padding-right: 17px}
+  //&.disable-scroll {overflow: hidden;padding-right: 17px}
 }
 
 section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 0;animation: fade-in .3s ease-in;
@@ -15,7 +15,9 @@ section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 
   }
 }
 
-.dev-wrapper {columns: 3;column-gap: 15px;}
+.dev-wrapper {position: relative;margin: 20px auto;height: 684px;
+  &.loading {@include full-spread(fixed)}
+}
 
 .icon-wrapper {cursor: pointer;//filter: grayscale(1) contrast(0) brightness(.5);
   svg {
@@ -25,4 +27,7 @@ section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 
     .icon-invert {filter: invert(0.8)}
   }
   //&:hover {filter: none}
+  &.preloader {cursor: auto;
+    svg {height: 500px}
+  }
 }

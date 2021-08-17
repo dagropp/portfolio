@@ -12,6 +12,8 @@ interface MenuItemData<T> {
 
 type Nullable<T> = T | null;
 
+type Optional<T> = T | undefined;
+
 type RestCollection<T, U = string> = {
   [id in U]: T;
 }

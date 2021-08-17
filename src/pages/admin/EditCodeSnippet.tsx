@@ -4,13 +4,14 @@ import SelectRelation from "../../components/admin/SelectRelation";
 import FormInput from "../../components/form/FormInput";
 import FormLabel from "../../components/form/FormLabel";
 import FileInput from "../../components/admin/FileInput";
+import FormTextarea from "../../components/form/FormTextarea";
 
 const EditCodeSnippet: React.FC = () => {
 
   const [projects, setProjects] = useState<RestProject[]>([]);
 
   useEffect(() => {
-    ServerService.getTable<RestProject>("projects")
+    ServerService.getTable("projects")
       .then(setProjects);
   }, [])
 
@@ -38,14 +39,27 @@ const EditCodeSnippet: React.FC = () => {
           <FormLabel
             htmlFor="github"
             required
+            title="GitHub path"
           >
-            <span>GitHub link</span>
             <FormInput
               name="github"
               id="github"
               value=""
-              placeholder="Add value..."
+              placeholder="https://github.com/dagropp/"
+              type="url"
               required
+            />
+          </FormLabel>
+          <FormLabel
+            htmlFor="description"
+            title="Code description"
+          >
+            <FormTextarea
+              name="description"
+              id="description"
+              placeholder="Add value..."
+              value=""
+              maxLength={500}
             />
           </FormLabel>
           <FileInput

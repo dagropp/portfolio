@@ -44,9 +44,9 @@
 }
 
 @mixin custom-scroll-bar($color) {
-  &::-webkit-scrollbar {width: 3px;}
-  //&::-webkit-scrollbar-track {padding-right: 5px}
-  &::-webkit-scrollbar-thumb {background-color: $color;}
+  &::-webkit-scrollbar {@include square(6px)}
+  &::-webkit-scrollbar-thumb {background-color: $color}
+  &::-webkit-scrollbar-button {opacity: 0}
 }
 
 @mixin primary-color($alpha: 1) {

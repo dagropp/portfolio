@@ -41,7 +41,11 @@ class ServerService {
     return this.get<RestDataRequest, RestDataResponse>("fetch_data", app_section);
   }
 
-  public static async getTable<T>(table: DataBaseSectionTable) {
+  public static async getTable(table: "projects"): Promise<RestProject[]>;
+
+  public static async getTable(table: "code_snippets"): Promise<RestCodeSnippet[]>;
+
+  public static async getTable<T>(table: DataBaseSectionTable): Promise<T[]> {
     return this.get<{ table: string }, T[]>("fetch_table", {table})
   }
 

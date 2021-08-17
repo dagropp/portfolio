@@ -36,7 +36,7 @@ const EditProject: React.FC = () => {
   const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
-    ServerService.getTable<RestProject>("projects")
+    ServerService.getTable("projects")
       .then(setProjects);
   }, [])
 
@@ -73,7 +73,7 @@ const EditProject: React.FC = () => {
     for (const key of formData.keys()) {
       data[key] = formData.getAll(key).join();
     }
-
+    console.log(data)
     ServerService.post("update_project", data)
       .then(console.log);
   }

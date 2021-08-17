@@ -3,9 +3,10 @@ import React, {Dispatch, MouseEventHandler, SetStateAction, useEffect} from "rea
 interface ContainerProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  hideOverlay?: boolean;
 }
 
-const AppOverlay: React.FC<ContainerProps> = ({children, isOpen, setIsOpen}) => {
+const AppOverlay: React.FC<ContainerProps> = ({children, isOpen, setIsOpen, hideOverlay}) => {
 
   useEffect(() => {
     document.body.classList.toggle("disable-scroll", isOpen);
@@ -19,7 +20,7 @@ const AppOverlay: React.FC<ContainerProps> = ({children, isOpen, setIsOpen}) => 
     <div
       id="app_overlay"
       onClick={overlayClick}
-      className={`app-overlay flex-row-centered ${isOpen ? "is-open" : ""}`}
+      className={`app-overlay flex-row-centered ${isOpen ? "is-open" : ""} ${hideOverlay ? "transparent" : ""}`}
     >{children}</div>
   )
 }

@@ -4,8 +4,7 @@ import AppIcon from "../../icons/AppIcon";
 import LinkListItem from "../lists/LinkListItem";
 
 interface ContainerProps {
-  fileName: string;
-  github: string;
+  item: RestCodeSnippet;
 }
 
 const languageData: RestCollection<{ display: string, import?: string }, ProgrammingLanguage> = {
@@ -21,8 +20,9 @@ const languageData: RestCollection<{ display: string, import?: string }, Program
   tsx: {display: "React / TSX", import: "tsx"}
 }
 
-const CodeSnippet: React.FC<ContainerProps> = ({fileName, github}) => {
+const CodeSnippet: React.FC<ContainerProps> = ({item}) => {
 
+  const {name, github} = item;
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState<ProgrammingLanguage>();
   const [height, setHeight] = useState(355);
@@ -30,7 +30,7 @@ const CodeSnippet: React.FC<ContainerProps> = ({fileName, github}) => {
   const ref = useRef<HTMLElement>(null);
 
   const getProgrammingLanguage = (): ProgrammingLanguage => {
-    const split = fileName.split(".");
+    const split = name.split(".");
     return split[split.length - 1] as ProgrammingLanguage;
   }
 
@@ -45,12 +45,12 @@ const CodeSnippet: React.FC<ContainerProps> = ({fileName, github}) => {
   useEffect(() => {
     fetchLanguage()
       .then((language) => {
-        fetch(`/assets/code-snippets/${fileName}`)
+        fetch(`http://localhost/code_snippets/${name}`)
           .then((res) => res.text()
             .then(setCode));
         setLanguage(language);
       })
-  }, [fileName])
+  }, [name])
 
   useEffect(() => {
     if (ref.current) {
@@ -79,9 +79,9 @@ const CodeSnippet: React.FC<ContainerProps> = ({fileName, github}) => {
     >
       <div className="title-wrap">
         {language && <span className="language">{languageData[language].display}</span>}
-        <span className="file-name">{fileName}</span>
+        <span className="file-name">{name}</span>
         <a
-          href={`https://github.com/dagropp/${github}`}
+          href={github}
           target="_blank"
           rel="noreferrer noopener"
           aria-label="GitHub"

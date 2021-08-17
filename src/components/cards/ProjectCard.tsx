@@ -1,21 +1,18 @@
 import React, {useEffect, useState} from "react";
 import AppCard from "./AppCard";
 import UiService from "../../global/UiService";
-import {useHistory} from "react-router-dom";
-import AppIcon from "../../icons/AppIcon";
 import ToolsList from "../lists/ToolsList";
-import LinkListItem from "../lists/LinkListItem";
-import LinksList from "../lists/LinksList";
-import NpmCounter from "../add-ons/NpmCounter";
 import CardDescription from "./CardDescription";
-import CodeSnippet from "../content-sections/CodeSnippet";
-import ContentCardPopup from "../popup/ContentCardPopup";
+import AppOverlay from "../popup/AppOverlay";
+import ProjectCodeExamples from "../content-sections/ProjectCodeExamples";
 
 interface ContainerProps {
   item: RestProject;
+  index: number;
+  totalProjects: number;
 }
 
-const ProjectCard: React.FC<ContainerProps> = ({item}) => {
+const ProjectCard: React.FC<ContainerProps> = ({item, index, totalProjects}) => {
 
   const {
     app_section, date_start, date_end, description, download_link, id, title, npm, site_link, tags, tools, type,
@@ -24,77 +21,67 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
   const [npmDownloads, setNpmDownloads] = useState(0);
   const [relationCard, setRelationCard] = useState<HTMLElement>();
   const [expand, setExpand] = useState(false);
-  const year = UiService.parseMonths(date_start, date_end);
-  const history = useHistory();
+  const date = UiService.parseMonths(date_start, date_end);
 
-  const pulsateForwardAnimation: Keyframe[] = [
-    {transform: "scale(1)"},
-    {transform: "scale(1.1)"},
-    {transform: "scale(1)"}
-  ]
+  const parsePosition = () => {
+    const setProjectsHeight = (total: number) => {
+      const rows = Math.ceil(total / 3);
+      return rows * 218 + (rows - 1) * 15;
+    }
+
+    const COLUMNS = 3;
+    const ROW_HEIGHT = 218 + 15;
+    const COL_WIDTH = 350 + 15;
+    const CONTAINER_WIDTH = 1080;
+    const CONTAINER_HEIGHT = setProjectsHeight(totalProjects);
+
+    const col = index % COLUMNS;
+    const row = Math.floor(index / COLUMNS);
+
+    const top = row * ROW_HEIGHT;
+    const left = col * COL_WIDTH;
+    const right = CONTAINER_WIDTH - 350 - left;
+    const bottom = CONTAINER_HEIGHT - 218 - top;
+
+    return {top, left, right, bottom}
+  }
 
   useEffect(() => {
     if (npm) UiService.getTotalNpmDownloads(npm).then(setNpmDownloads);
   }, [npm])
 
-  useEffect(() => {
-    if (relation) {
-      window.requestAnimationFrame(() => {
-        const card = document.getElementById(relation) as HTMLElement;
-        if (card) setRelationCard(card);
-      })
-    }
-  }, [relation])
-
-  const highlightRelationCard = () => {
-    const card = relationCard as HTMLElement;
-    history.push(history.location.pathname + "#" + relation)
-    setTimeout(() => {
-      console.log(card.getBoundingClientRect().top)
-      window.scroll({top: window.pageYOffset - 100});
-    })
-    const animation = card.animate?.(pulsateForwardAnimation, {
-      duration: 500, iterations: 3, fill: "both", easing: "ease-in-out"
-    });
-    // animation?.finished.then(() => window.location.hash = "")
-  }
-
   return (
     <>
-      <AppCard
-        className={`project-card ${app_section}`}
-        id={id}
-        onClick={() => setExpand(true)}
-      >
-        <h2>{title}</h2>
-        <p>{year}</p>
-        <CardDescription description={description}/>
-        {npm && <NpmCounter packageName={npm}/>}
-        <ToolsList tools={tools}/>
-        <LinksList
-          site_link={site_link}
-          download_link={download_link}
-          github={github}
-          npm={npm}
-        />
-        <div className="tags-wrap">
-          {tags?.split(",").map((tag: string) => <span className="tag" key={tag}># {decodeURI(tag)}</span>)}
-        </div>
-        {relationCard && relationCard.dataset.meta_title &&
-        <div
-          className=""
-          onClick={highlightRelationCard}
-        >As a part of: <span className="italic">{relationCard.dataset.meta_title}</span></div>}
-        <CodeSnippet
-          fileName="LinkedList.js"
-          github="hadasim/blob/master/src/react-component/admin/gallery/DraggableImage.jsx"
-        />
-      </AppCard>
-      <ContentCardPopup
-        project={item}
+      <AppOverlay
         isOpen={expand}
         setIsOpen={setExpand}
       />
+      <AppCard
+        className={`project-card ${app_section} ${expand ? "expand" : ""}`}
+        id={id}
+        onClick={() => setExpand(true)}
+        style={{...parsePosition()}}
+      >
+        <div className="scroll-container">
+          <h2 className="title">{title}</h2>
+          <p className="date">{date}</p>
+          <ToolsList
+            className={expand ? "" : "minified"}
+            tools={tools}
+          />
+          <CardDescription
+            className={expand ? "" : "minified"}
+            description={description}
+          />
+          {
+            expand
+              ? <>
+                <ProjectCodeExamples projectId={item.id}/>
+              </>
+              : <button type="button">Show More...</button>
+          }
+        </div>
+      </AppCard>
     </>
   )
 }

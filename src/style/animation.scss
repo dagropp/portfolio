@@ -7,3 +7,10 @@
   from {opacity: 1}
   to {opacity: 0}
 }
+
+@keyframes scale-in-card {
+  0% {opacity: 0;transform: scale(.3187134502923977)}
+  70% {transform: scale(.3187134502923977)}
+  85% {opacity: 1}
+  100% {transform: scale(1)}
+}

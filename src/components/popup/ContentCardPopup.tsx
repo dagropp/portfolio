@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useRef} from "react";
 import AppPopup from "./AppPopup";
 
 interface ContainerProps {
@@ -13,9 +13,10 @@ const ContentCardPopup: React.FC<ContainerProps> = ({project, isOpen, setIsOpen}
     <AppPopup
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      className="contact-popup">
+      hideOverlay
+      className="content-popup">
       {/*<ProjectCard item={project}/>*/}
-      {project.title}
+      {/*{project.title}*/}
     </AppPopup>
   )
 }

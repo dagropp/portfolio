@@ -1,116 +1,61 @@
-interface ResizedImagesList {
-  [name: string]: {
-    [size: number]: ResizedImageData
-  }
-}
-
-interface ResizedImageData {
-  src: string;
-  name: string;
-  type: string;
-}
-
-interface ResizeImageOptions {
-  sizes: number[];
-  type?: "image/jpeg" | "image/png" | "image/gif";
-  quality?: number;
-}
+import CustomEventsService from "./CustomEventsService";
 
 class ImageService {
 
-  private images: ThumbnailData[];
-  private readonly input: HTMLInputElement;
+  private images: ThumbnailData[] = [];
+  private _resultInput?: HTMLInputElement;
+  private _tempInput?: HTMLInputElement;
+  private _filesCount: number = 0;
 
-  constructor(input: HTMLInputElement) {
-    this.images = [];
-    this.input = input;
+  public register(resultInput: HTMLInputElement, tempInput: HTMLInputElement) {
+    this._resultInput = resultInput;
+    this._tempInput = tempInput;
   }
 
-  register(): ThumbnailData[] {
-    this.images = [...this.images, ...Array.from(this.input.files ?? []).map((file) => ({file}))];
-    return this.images;
+  public get id(): string {
+    return this._tempInput?.id ?? "";
   }
 
-  updateInput() {
-    this.input.files = new FileList();
+  public get input(): Optional<HTMLInputElement> {
+    return this._tempInput;
   }
 
-  didReadingComplete(): boolean {
-    return this.images.every((item) => item.src);
+  public get filesCount(): number {
+    return this._filesCount;
   }
 
-  addListener(type: "imagesReadingComplete", handler: () => void) {
-    const didComplete = () => {
-      if (this.images.every((item) => item.src)) handler();
+  public updateInput(): void {
+    if (this._resultInput?.files && this._tempInput?.files) {
+      const dataTransfer = new DataTransfer();
+      const allFiles = [...Array.from(this._resultInput.files), ...Array.from(this._tempInput.files)]
+      allFiles.forEach((file) => dataTransfer.items.add(file));
+      this._resultInput.files = dataTransfer.files;
+      CustomEventsService.dispatch(
+        "filesChanged",
+        {count: this._resultInput.files.length},
+        this._tempInput
+      );
     }
-
-    this.input.addEventListener(type, didComplete);
-    return {remove: () => this.input.removeEventListener(type, didComplete)};
   }
 
-  async readImage(data: ThumbnailData, index: number): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(data.file);
-      fileReader.addEventListener("load", (event: ProgressEvent<FileReader>) => {
-        if (event.target?.result) {
-          this.images[index].src = event.target.result as string;
-          this.input.dispatchEvent(new CustomEvent("imageReadingComplete", {detail: {index}}));
-          return this.images[index].src;
-        } else {
-          return reject("FileReader failed:\n" + event.target?.error);
-        }
-      })
-      fileReader.addEventListener("error", (event: ProgressEvent<FileReader>) => {
-        return reject("FileReader failed:\n" + event.target?.error);
-      })
-    })
+  public reset(): void {
+    if (this._tempInput) this._tempInput.files = new FileList();
   }
 
-  /**
-   * Currently takes 90-200ms per image;
-   */
-  async resizeImages(data: ThumbnailData[], options: ResizeImageOptions): Promise<ResizedImagesList> {
+  public toggleCameraUsage(useCamera: boolean): void {
+    if (useCamera) {
+      this._tempInput?.setAttribute("capture", "");
+    } else {
+      this._tempInput?.removeAttribute("capture");
+    }
+  }
 
-    return new Promise((resolve, reject) => {
+  public addListener(type: "filesChanged", handler: CustomEventHandler<{ count: number }>): Optional<CustomEventListener>;
 
-      const {sizes} = options;
-      const temp: ResizedImagesList = {};
-
-      if (data.length === 0) return reject("ThumbnailData[] is empty.");
-      if (data.some((item) => !item.src)) return reject("Some images were not processed.")
-
-      data.forEach((item, index) => {
-        const img = document.createElement("img");
-        img.src = item.src!;
-
-        const {name, type: fType} = item.file;
-        const type = options.type || fType;
-        temp[name] = {};
-        const {naturalWidth: width, naturalHeight: height} = img;
-        sizes.forEach((size) => {
-          const canvas = document.createElement("canvas");
-          const context = canvas.getContext("2d");
-          let resizeHeight, resizeWidth;
-          if (width > height) {
-            resizeWidth = size;
-            resizeHeight = resizeWidth / width * height
-          } else {
-            resizeHeight = size;
-            resizeWidth = resizeHeight / height * width;
-          }
-          canvas.width = resizeWidth;
-          canvas.height = resizeHeight;
-          context?.drawImage(img, 0, 0, width, height, 0, 0, resizeWidth, resizeHeight);
-          const src = canvas.toDataURL(type, 0.75);
-          temp[name][size] = {src, name, type};
-        })
-        if (index === data.length - 1) return resolve(temp);
-      })
-
-    });
+  public addListener(type: CustomEventType, handler: CustomEventHandler): Optional<CustomEventListener> {
+    if (this._tempInput) return CustomEventsService.addListener(this._tempInput, type, handler);
   }
 
 }
 
-export default ImageService;
+export const imageService = new ImageService();

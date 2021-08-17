@@ -1,12 +1,17 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {navService} from "../../global/NavService";
 import CodeSnippet from "../../components/content-sections/CodeSnippet";
+import ServerService from "../../global/ServerService";
 
 const Admin: React.FC = () => {
 
+  const [code, setCode] = useState<RestCodeSnippet[]>([]);
+
   useEffect(() => {
     document.body.classList.add("admin");
+    ServerService.getTable("code_snippets")
+      .then(setCode)
     return () => document.body.classList.remove("admin");
   }, []);
 
@@ -44,6 +49,13 @@ const Admin: React.FC = () => {
           {routes}
         </Switch>
       </Router>
+      {code.map((item) =>
+        <React.Fragment key={item.id}>
+          <p>{item.description}</p>
+          <CodeSnippet item={item}/>
+        </React.Fragment>
+      )}
+      <form action=".." id='form1'></form>
       {/*<CodeSnippet*/}
       {/*  fileName="ai.py"*/}
       {/*  github="four_in_a_row/blob/master/app/classes/ai.py"*/}

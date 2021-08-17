@@ -21,26 +21,32 @@ const Dev: React.FC = () => {
         setExperience(UiService.sortByField(experience, "year_start"));
         setProjects(UiService.sortByField(projects, "date_start"));
       })
-      .finally(() => setTimeout(() => setLoading(false), 500));
+      .finally(() => setTimeout(() => setLoading(false), 1000));
   }, [])
 
+  const setProjectsHeight = () => {
+    const rows = Math.ceil(projects.length / 3);
+    return {height: rows * 218 + (rows - 1) * 15}
+  }
+
+  const projectCards = projects.map((item, index) =>
+    <ProjectCard
+      totalProjects={projects.length}
+      key={item.id + index}
+      item={item}
+      index={index}
+    />)
+
   return (
-    <>
-      <section className="dev-wrapper" hidden={!loading}>
+    loading
+      ?
+      <section className="dev-wrapper flex-row-centered loading">
         <PreloaderIcon/>
       </section>
-      <section className="dev-wrapper" hidden={loading}>
-        <article className="experience">
-          {experience.map((item) => <ExperienceCard key={item.id} item={item}/>)}
-        </article>
-        <article className="education">
-          {education.map((item) => <EducationCard key={item.id} item={item}/>)}
-        </article>
-        <article className="projects">
-          {projects.map((item) => <ProjectCard key={item.id} item={item}/>)}
-        </article>
+      :
+      <section className="dev-wrapper" style={setProjectsHeight()}>
+        {projectCards}
       </section>
-    </>
   )
 }
 

@@ -2,7 +2,7 @@ class TypeUtils {
   public static strToUnderscore(str: string): string {
     return str
       .toLowerCase()
-      .replace(/[-\s]/, "_");
+      .replace(/[-\s]/g, "_");
   }
 
   public static idToTitle(str: string): string {
