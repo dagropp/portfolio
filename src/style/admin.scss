@@ -27,7 +27,7 @@
     border-radius: 6px;border: 1px solid white;margin: 5px;transition: .3s ease-in-out;
     transition-property: background-color, color;cursor: pointer;color: white;font-weight: bold;line-height: 26px;
     &::after {content: attr(data-display)}
-    &:checked {background-color: rgba(255, 255, 255, .4);border-color: #4158d0}
+    &:checked {background-color: rgba(255, 255, 255, .4);border-color: $deep-purple}
     &:hover:not(:checked) {background-color: rgba(255, 255, 255, .1)}
   }
 

@@ -1,5 +1,9 @@
+@mixin inset($top, $right: $top, $bottom: $top, $left: $right) {
+  top: $top;right: $right;bottom: $bottom;left: $left
+}
+
 @mixin full-spread($position: absolute, $offset: 0) {
-  position: $position;top: $offset;right: $offset;bottom: $offset;left: $offset;
+  position: $position;@include inset($offset);
 }
 
 @mixin flex-centered($direction: row) {
@@ -56,4 +60,8 @@
 $app-width-desktop: 1080px;
 $primary-color: rgb(49, 49, 49);
 
-$link-color: #FFCC70;
+$deep-purple: #4158d0;
+$deep-pink: #c850c0;
+$radiant-yellow: #ffcc70;
+
+$link-color: $radiant-yellow;

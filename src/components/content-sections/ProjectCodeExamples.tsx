@@ -14,7 +14,6 @@ const ProjectCodeExamples: React.FC<ContainerProps> = ({projectId}) => {
     ServerService.getTable("code_snippets")
       .then((res) => {
         setCodeSnippets(res.filter(snippet => snippet.relation === projectId))
-        res.forEach((i) => console.log(i.relation, projectId))
       });
   }, [])
 

@@ -2,10 +2,10 @@
 @import "animation";
 
 body {
-  @include linear-gradient(#4158D0, 43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);background-repeat: no-repeat;
-  overflow-y: scroll;min-height: 100vh;
+  @include linear-gradient($deep-purple, 43deg, $deep-purple 0%, $deep-pink 46%, $radiant-yellow 100%);background-repeat: no-repeat;
+  overflow-y: scroll;min-height: 100vh;@include linear-gradient(#aaa, 43deg, #aaa 0%, #bbb 46%, #ccc 100%);
   &.admin {@include linear-gradient(#444, 43deg, #444 0%, #333 46%, #222 100%)}
-  //&.disable-scroll {overflow: hidden;padding-right: 17px}
+  &.disable-scroll {overflow: hidden}
 }
 
 section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 0;animation: fade-in .3s ease-in;
@@ -15,7 +15,7 @@ section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 
   }
 }
 
-.dev-wrapper {position: relative;margin: 20px auto;height: 684px;
+.dev-wrapper {margin: 20px auto;display: flex;flex-flow: row wrap;gap: 15px;
   &.loading {@include full-spread(fixed)}
 }
 
@@ -30,4 +30,15 @@ section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 
   &.preloader {cursor: auto;
     svg {height: 500px}
   }
+}
+
+button.app-button {appearance: none;cursor: pointer;transition: background-color .3s ease-in-out;
+  &.clear {border: 1px solid;background: none;padding: 5px 15px;border-radius: 3em;}
+  &.transparent {border: none;background: none}
+  &.clear {
+    &:hover {background-color: rgba(255, 255, 255, .4)}
+  }
+}
+.button-icon {
+  &.back svg {stroke: $primary-color}
 }

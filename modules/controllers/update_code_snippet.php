@@ -23,4 +23,4 @@ if (isset($_FILES['code_file'])) {
     $response = $didAddToDb && $didWrite;
 }
 
-echo json_encode(['response' => $response, 'is_writable' => is_writable($_SERVER['DOCUMENT_ROOT'] . '/code_snippets')]);
+echo json_encode(['name' => $name, 'relation' => $relation, 'github' => $github, 'description' => $description]);

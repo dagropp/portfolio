@@ -2,27 +2,41 @@
 
 .app-card {background-color: rgba(255, 255, 255, .2);border-radius: 10px;@include restrict-width(350px);padding: 15px;
   cursor: pointer;@include break-inside(avoid);position: relative;overflow: hidden;
-  color: $primary-color;transition: background-color .3s linear;
+  color: $primary-color;transition: .3s linear;transition-property: background-color, box-shadow;
   .title {font-size: 20px;font-family: 'Merriweather', serif}
   .date {font-size: 14px;font-style: italic;margin: 5px 0}
   .description.minified {max-height: 60px;overflow-y: hidden;-webkit-mask-image: linear-gradient(black, transparent)}
-  button {appearance: none;border: 1px solid;background: none;padding: 5px 15px;border-radius: 3em}
   .tags-wrap {
     .tag {color: white;cursor: pointer;user-select: none;transition: all .3s ease-in-out;
       + .tag {margin-left: 10px;}
-      &:hover {text-decoration: underline;background-color: #FFCC70;color: #C850C0}
-      &::selection, span::selection {background-color: #FFCC70;color: #C850C0}
+      &:hover {text-decoration: underline;background-color: $radiant-yellow;color: $deep-pink}
+      &::selection, span::selection {background-color: $radiant-yellow;color: $deep-pink}
     }
   }
   .links-wrap {
     a {text-decoration: none}
   }
-  &:not(.contact-popup):hover {background-color: rgba(255, 255, 255, .4)}
-  &.project-card {position: absolute;max-width: none;width: auto;transition: ease-in 0.2s;
-    transition-property: top, bottom, left, right, background-color;
-    &.expand {top: 0!important;left: 0!important;right: 0!important;bottom: 0!important;z-index: 100;
-      background-color: #E093B9;transition-duration: .3s;cursor: auto;overflow-y: scroll;
-      @include custom-scroll-bar(rgba(65, 88, 208, .5))}
+  &:not(.contact-popup):hover {background-color: rgba(255, 255, 255, .4);@include float-shadow;
+    * {user-select: none}
+  }
+  &.project-card {
+    &.hide {opacity: 0;pointer-events: none;transition: opacity .3s ease-in-out;}
+    &.expand {@include full-spread(fixed, 60px);max-width: none;width: auto;z-index: 10;background-color: #E093B9;
+      cursor: auto;animation: fade-in .3s ease-in-out;overflow-y: scroll;padding: 0;@include float-shadow;
+      .project-head {display: flex;align-items: center;@include sticky;top: 0;background-color: #E093B9;padding: 10px 0;
+        z-index: 2;
+        @include float-shadow;
+        .back-button {@include square(45px);margin-right: 10px}
+      }
+      .project-body {padding: 15px}
+    }
+    @media only screen and (max-width: 599px) {
+      max-width: none;margin: 0 15px;
+      &.expand {@include inset(0);border-radius: 0;margin: 0}
+    }
+    @media only screen and (min-width: 600px) {
+      @include custom-scroll-bar(rgba(255, 255, 255, .5));
+    }
   }
 }
 

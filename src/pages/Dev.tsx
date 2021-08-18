@@ -21,21 +21,39 @@ const Dev: React.FC = () => {
         setExperience(UiService.sortByField(experience, "year_start"));
         setProjects(UiService.sortByField(projects, "date_start"));
       })
-      .finally(() => setTimeout(() => setLoading(false), 1000));
+      // .finally(() => setTimeout(() => setLoading(false), 1000))
+      .finally(() => setLoading(false));
+
   }, [])
 
-  const setProjectsHeight = () => {
-    const rows = Math.ceil(projects.length / 3);
-    return {height: rows * 218 + (rows - 1) * 15}
-  }
-
-  const projectCards = projects.map((item, index) =>
+  const projectCards = projects.map((item) =>
     <ProjectCard
-      totalProjects={projects.length}
-      key={item.id + index}
+      key={item.id}
       item={item}
-      index={index}
     />)
+
+  const sample: RestProject = {
+    id: "proj_sample",
+    description: "Each move (and next move) is analysed and gets a score, based on the following factors:\n" +
+      "       -  VERY HIGH SCORE: 3 discs of the same kind and 1 vacant - either win or block win.\n" +
+      "       -  HIGH SCORE: 2 discs of the same kind and 2 vacant - progress in game, or block progression.\n" +
+      "       -  LOW SCORE: 1 discs of the same kind and 3 vacant - if no other moves available, better than random.\n" +
+      "       -  VERY NEGATIVE SCORE: 3 discs of other player and 1 vacant - prevent other player from winning next turn.\n" +
+      "       -  NEGATIVE SCORE: 3 discs of this player and 1 vacant - avoid block in next turn.",
+    date_start: "2020-03",
+    date_end: "2021-04",
+    app_section: "dev",
+    tags: "",
+    title: "Sample Project",
+    type: "personal",
+    tools: "react,sass",
+    github: "",
+    relation: "",
+    skills: "",
+    site_link: "",
+    npm: "js-dast",
+    download_link: ""
+  }
 
   return (
     loading
@@ -44,7 +62,8 @@ const Dev: React.FC = () => {
         <PreloaderIcon/>
       </section>
       :
-      <section className="dev-wrapper" style={setProjectsHeight()}>
+      <section className="dev-wrapper">
+        <ProjectCard item={sample}/>
         {projectCards}
       </section>
   )

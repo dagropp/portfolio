@@ -72,6 +72,10 @@ class UiService {
     return {__html: data}
   }
 
+  public static isMobile(): boolean {
+    return window.matchMedia('(max-width: 600px)').matches;
+  }
+
   private static getMonthString(date: Date): string {
     return (date.getMonth() + 1).toString().padStart(2, "0")
   }

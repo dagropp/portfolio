@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import AppCard from "./AppCard";
 import UiService from "../../global/UiService";
 import ToolsList from "../lists/ToolsList";
 import CardDescription from "./CardDescription";
 import AppOverlay from "../popup/AppOverlay";
 import ProjectCodeExamples from "../content-sections/ProjectCodeExamples";
+import BackIcon from "../../icons/button/BackIcon";
+import NpmCounter from "../add-ons/NpmCounter";
 
 interface ContainerProps {
   item: RestProject;
-  index: number;
-  totalProjects: number;
 }
 
-const ProjectCard: React.FC<ContainerProps> = ({item, index, totalProjects}) => {
+const ProjectCard: React.FC<ContainerProps> = ({item}) => {
 
   const {
     app_section, date_start, date_end, description, download_link, id, title, npm, site_link, tags, tools, type,
@@ -21,67 +21,110 @@ const ProjectCard: React.FC<ContainerProps> = ({item, index, totalProjects}) => 
   const [npmDownloads, setNpmDownloads] = useState(0);
   const [relationCard, setRelationCard] = useState<HTMLElement>();
   const [expand, setExpand] = useState(false);
+  const [expandStyle, setExpandStyle] = useState<any>({});
+  const cardRef = useRef<HTMLDivElement>(null);
+  const expandRef = useRef<HTMLDivElement>(null);
   const date = UiService.parseMonths(date_start, date_end);
-
-  const parsePosition = () => {
-    const setProjectsHeight = (total: number) => {
-      const rows = Math.ceil(total / 3);
-      return rows * 218 + (rows - 1) * 15;
-    }
-
-    const COLUMNS = 3;
-    const ROW_HEIGHT = 218 + 15;
-    const COL_WIDTH = 350 + 15;
-    const CONTAINER_WIDTH = 1080;
-    const CONTAINER_HEIGHT = setProjectsHeight(totalProjects);
-
-    const col = index % COLUMNS;
-    const row = Math.floor(index / COLUMNS);
-
-    const top = row * ROW_HEIGHT;
-    const left = col * COL_WIDTH;
-    const right = CONTAINER_WIDTH - 350 - left;
-    const bottom = CONTAINER_HEIGHT - 218 - top;
-
-    return {top, left, right, bottom}
-  }
 
   useEffect(() => {
     if (npm) UiService.getTotalNpmDownloads(npm).then(setNpmDownloads);
   }, [npm])
+
+  useEffect(() => {
+    if (expandRef.current) {
+
+    }
+  }, [expandRef.current])
+
+  useEffect(() => {
+    if (expand) {
+      const rect = cardRef.current?.getBoundingClientRect();
+      if (rect && expandRef.current) {
+        const top = rect.top + "px";
+        const bottom = (window.innerHeight - rect.bottom) + "px";
+        let left, right, borderRadius, start: Keyframe;
+
+        if (UiService.isMobile()) {
+          left = right = "15px";
+          borderRadius = "10px";
+          const scaleX = (window.innerWidth - 30) / window.innerWidth;
+          const scaleY = 218 / window.innerHeight;
+          start = {transform: `scaleX(${scaleX}) scaleY(${scaleY})`, borderRadius, opacity: "0"}
+          // expandRef.current.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
+          expandRef.current.style.transformOrigin = `center ${rect.bottom - (218)}px`;
+        } else {
+          left = rect.left + "px";
+          right = (window.innerWidth - 15 - rect.right) + "px";
+          borderRadius = "";
+          start = {top, left, bottom, right, pointerEvents: "none", borderRadius};
+        }
+        const end: Keyframe = {};
+
+        expandRef.current.animate?.([start, start, end], {duration: 500, easing: "ease-in-out"});
+      }
+    }
+  }, [expand])
 
   return (
     <>
       <AppOverlay
         isOpen={expand}
         setIsOpen={setExpand}
+        hideOverlay
       />
       <AppCard
-        className={`project-card ${app_section} ${expand ? "expand" : ""}`}
+        className={`project-card ${expand ? "hide" : ""}`}
         id={id}
         onClick={() => setExpand(true)}
-        style={{...parsePosition()}}
+        cardRef={cardRef}
       >
-        <div className="scroll-container">
+        <h2 className="title">{title}</h2>
+        <p className="date">{date}</p>
+        <ToolsList
+          className="minified"
+          tools={tools}
+        />
+        <CardDescription
+          className="minified"
+          description={description}
+        />
+        <button
+          className="app-button clear"
+          type="button"
+        >Show More...
+        </button>
+      </AppCard>
+      {expand
+      &&
+      <AppCard
+        className="project-card expand"
+        id={id}
+        style={expandStyle}
+        cardRef={expandRef}
+      >
+        <div className="project-head">
+          <button
+            className="app-button transparent back-button"
+            type="button"
+            onClick={() => setExpand(false)}
+          ><BackIcon/></button>
           <h2 className="title">{title}</h2>
+        </div>
+        <div className="project-body">
           <p className="date">{date}</p>
           <ToolsList
-            className={expand ? "" : "minified"}
             tools={tools}
           />
           <CardDescription
-            className={expand ? "" : "minified"}
             description={description}
           />
-          {
-            expand
-              ? <>
-                <ProjectCodeExamples projectId={item.id}/>
-              </>
-              : <button type="button">Show More...</button>
-          }
+          {npm && <NpmCounter packageName={npm}/>}
+          <ProjectCodeExamples
+            projectId={item.id}
+          />
         </div>
       </AppCard>
+      }
     </>
   )
 }
