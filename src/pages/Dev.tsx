@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
 import ServerService from "../global/ServerService";
-import EducationCard from "../components/cards/EducationCard";
-import ExperienceCard from "../components/cards/ExperienceCard";
 import PreloaderIcon from "../icons/PreloaderIcon";
 import ProjectCard from "../components/cards/ProjectCard";
 import UiService from "../global/UiService";
@@ -15,7 +13,7 @@ const Dev: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    ServerService.getSectionData("dev")
+    ServerService.getSectionData()
       .then(({education, experience, projects}) => {
         setEducation(UiService.sortByField(education, "year_start"));
         setExperience(UiService.sortByField(experience, "year_start"));
@@ -32,29 +30,6 @@ const Dev: React.FC = () => {
       item={item}
     />)
 
-  const sample: RestProject = {
-    id: "proj_sample",
-    description: "Each move (and next move) is analysed and gets a score, based on the following factors:\n" +
-      "       -  VERY HIGH SCORE: 3 discs of the same kind and 1 vacant - either win or block win.\n" +
-      "       -  HIGH SCORE: 2 discs of the same kind and 2 vacant - progress in game, or block progression.\n" +
-      "       -  LOW SCORE: 1 discs of the same kind and 3 vacant - if no other moves available, better than random.\n" +
-      "       -  VERY NEGATIVE SCORE: 3 discs of other player and 1 vacant - prevent other player from winning next turn.\n" +
-      "       -  NEGATIVE SCORE: 3 discs of this player and 1 vacant - avoid block in next turn.",
-    date_start: "2020-03",
-    date_end: "2021-04",
-    app_section: "dev",
-    tags: "",
-    title: "Sample Project",
-    type: "personal",
-    tools: "react,sass",
-    github: "",
-    relation: "",
-    skills: "",
-    site_link: "",
-    npm: "js-dast",
-    download_link: ""
-  }
-
   return (
     loading
       ?
@@ -63,7 +38,6 @@ const Dev: React.FC = () => {
       </section>
       :
       <section className="dev-wrapper">
-        <ProjectCard item={sample}/>
         {projectCards}
       </section>
   )

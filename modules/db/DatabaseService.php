@@ -36,10 +36,17 @@ class DatabaseService
         return $query ? $query->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    public function voidSql(string $sql): bool
+    public function voidSql(string $sql, array $updateTables = null): bool
     {
         $query = $this->connection->query($sql);
+        if ($query && $updateTables) $this->registerDbUpdate($updateTables);
         return boolval($query);
+    }
+
+    private function registerDbUpdate(array $tables) {
+        $tables = join(',', $tables);
+        $sql = "INSERT INTO `db_updates` (`id`, `timestamp`, `tables`) VALUES (NULL, CURRENT_TIMESTAMP, '$tables')";
+        $this->connection->query($sql);
     }
 
     /**

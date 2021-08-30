@@ -76,6 +76,22 @@ class UiService {
     return window.matchMedia('(max-width: 600px)').matches;
   }
 
+  public static setQueryString(obj: RestCollection<any>): string {
+    const query = Object.entries(obj)
+      .map((pair) => pair.join("="))
+      .join("&");
+    return "?" + query;
+  }
+
+  public static parseQueryString(query: string): RestCollection<string> {
+    return Object.fromEntries(
+      query
+        .substring(1)
+        .split("&")
+        .map((pair) => pair.split("="))
+    );
+  }
+
   private static getMonthString(date: Date): string {
     return (date.getMonth() + 1).toString().padStart(2, "0")
   }

@@ -43,15 +43,10 @@ interface RestProject {
   type: string;
 }
 
-interface RestDataRequest {
-  app_section?: AppSection;
-}
-
 interface RestDataResponse {
   education: RestEducation[];
   projects: RestProject[];
   experience: RestExperience[];
-  other: any[];
 }
 
 interface RestCodeSnippet {
@@ -67,4 +62,10 @@ interface RestDataListResponse {
   title: string;
 }
 
-type DataBaseSectionTable = "education" | "projects" | "experience" | "other" | "code_snippets";
+interface RestDbUpdate {
+  id: string;
+  timestamp: string;
+  tables: string;
+}
+
+type DataBaseSectionTable = "education" | "projects" | "experience" | "other" | "code_snippets" | "db_updates";

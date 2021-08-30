@@ -73,7 +73,6 @@ const EditProject: React.FC = () => {
     for (const key of formData.keys()) {
       data[key] = formData.getAll(key).join();
     }
-    console.log(data)
     ServerService.post("update_project", data)
       .then(console.log);
   }
@@ -144,16 +143,16 @@ const EditProject: React.FC = () => {
 
   return (
     <section className="admin-form-wrapper">
+      <SelectOptionsList
+        id="current_project"
+        title="Select Project"
+        defaultValue=""
+        defaultOption="New Project"
+        options={projects}
+        itemMap={{value: "id", display: "title"}}
+        onChange={switchProject}
+      />
       <form onSubmit={handleSubmit}>
-        <SelectOptionsList
-          id="current_project"
-          title="Select Project"
-          defaultValue=""
-          defaultOption="New Project"
-          options={projects}
-          itemMap={{value: "id", display: "title"}}
-          onChange={switchProject}
-        />
         <div className="form-inner">
           <h3 className="form-title"><span className="action">{isNew ? "Add" : "Edit"} Project:</span> <span
             className="title">{current.title}</span></h3>
