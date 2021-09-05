@@ -41,12 +41,14 @@ interface RestProject {
   tools: Nullable<string>;
   skills: Nullable<string>;
   type: string;
+  code_snippets?: RestCodeSnippet[]; // Added in the app
 }
 
 interface RestDataResponse {
   education: RestEducation[];
   projects: RestProject[];
   experience: RestExperience[];
+  code_snippets: RestCodeSnippet[];
 }
 
 interface RestCodeSnippet {

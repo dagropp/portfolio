@@ -7,6 +7,9 @@ import AppOverlay from "../popup/AppOverlay";
 import ProjectCodeExamples from "../content-sections/ProjectCodeExamples";
 import BackIcon from "../../icons/button/BackIcon";
 import NpmCounter from "../add-ons/NpmCounter";
+import SkillsList from "../lists/SkillsList";
+import LinksList from "../lists/LinksList";
+import TagsList from "../lists/TagsList";
 
 interface ContainerProps {
   item: RestProject;
@@ -27,51 +30,29 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
   const date = UiService.parseMonths(date_start, date_end);
 
   useEffect(() => {
-    if (npm) UiService.getTotalNpmDownloads(npm).then(setNpmDownloads);
-  }, [npm])
-
-  useEffect(() => {
-    if (expandRef.current) {
-
-    }
-  }, [expandRef.current])
-
-  useEffect(() => {
     if (expand) {
       const rect = cardRef.current?.getBoundingClientRect();
       if (rect && expandRef.current) {
-        const top = rect.top + "px";
-        const bottom = (window.innerHeight - rect.bottom) + "px";
-        let left, right, borderRadius, start: Keyframe;
+
+        let {bottom, top, left} = rect;
 
         if (UiService.isMobile()) {
-          left = right = "15px";
-          borderRadius = "10px";
-          const scaleX = (window.innerWidth - 30) / window.innerWidth;
-          const scaleY = 218 / window.innerHeight;
-          start = {transform: `scaleX(${scaleX}) scaleY(${scaleY})`, borderRadius, opacity: "0"}
-          // expandRef.current.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
-          expandRef.current.style.transformOrigin = `center ${rect.bottom - (218)}px`;
+          const vertical = top / window.innerHeight * 100 * 1.37;
+          expandRef.current.style.transformOrigin = `center ${vertical}%`;
         } else {
-          left = rect.left + "px";
-          right = (window.innerWidth - 15 - rect.right) + "px";
-          borderRadius = "";
-          start = {top, left, bottom, right, pointerEvents: "none", borderRadius};
+          top = top - 80;
+          left = left - ((window.innerWidth - 1080) / 2);
+          const horizontal = Math.floor((left + 175) / 1080 * 3);
+          const vertical = Math.floor((top + 109) / 684 * 3);
+          const parts: any = {0: "0", 1: "50%", 2: "100%"}
+          expandRef.current.style.transformOrigin = `${parts[horizontal]} ${parts[vertical]}`;
         }
-        const end: Keyframe = {};
-
-        expandRef.current.animate?.([start, start, end], {duration: 500, easing: "ease-in-out"});
       }
     }
   }, [expand])
 
   return (
     <>
-      <AppOverlay
-        isOpen={expand}
-        setIsOpen={setExpand}
-        hideOverlay
-      />
       <AppCard
         className={`project-card ${expand ? "hide" : ""}`}
         id={id}
@@ -94,37 +75,53 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
         >Show More...
         </button>
       </AppCard>
-      {expand
-      &&
-      <AppCard
-        className="project-card expand"
-        id={id}
-        style={expandStyle}
-        cardRef={expandRef}
+      <AppOverlay
+        isOpen={expand}
+        setIsOpen={setExpand}
+        hideOverlay
       >
-        <div className="project-head">
-          <button
-            className="app-button transparent back-button"
-            type="button"
-            onClick={() => setExpand(false)}
-          ><BackIcon/></button>
-          <h2 className="title">{title}</h2>
-        </div>
-        <div className="project-body">
-          <p className="date">{date}</p>
-          <ToolsList
-            tools={tools}
-          />
-          <CardDescription
-            description={description}
-          />
-          {npm && <NpmCounter packageName={npm}/>}
-          <ProjectCodeExamples
-            projectId={item.id}
-          />
-        </div>
-      </AppCard>
-      }
+        {expand &&
+        <AppCard
+          className="project-card expand"
+          id={id}
+          style={expandStyle}
+          cardRef={expandRef}
+        >
+          <div className="project-head">
+            <button
+              className="app-button transparent back-button"
+              type="button"
+              onClick={() => setExpand(false)}
+            ><BackIcon/></button>
+            <h2 className="title">{title}</h2>
+          </div>
+          <div className="project-body">
+            <p className="date">{date}</p>
+            <ToolsList
+              tools={tools}
+            />
+            <CardDescription
+              description={description}
+            />
+            {npm && <NpmCounter packageName={npm}/>}
+            <TagsList
+              tags={tags}
+            />
+            <ProjectCodeExamples
+              project={item}
+            />
+          </div>
+          <footer className="project-footer">
+            <LinksList
+              download_link={download_link}
+              github={github}
+              npm={npm}
+              site_link={site_link}
+            />
+          </footer>
+        </AppCard>
+        }
+      </AppOverlay>
     </>
   )
 }

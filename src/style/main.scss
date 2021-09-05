@@ -3,19 +3,19 @@
 
 body {
   @include linear-gradient($deep-purple, 43deg, $deep-purple 0%, $deep-pink 46%, $radiant-yellow 100%);background-repeat: no-repeat;
-  overflow-y: scroll;min-height: 100vh;@include linear-gradient(#aaa, 43deg, #aaa 0%, #bbb 46%, #ccc 100%);
+  overflow-y: scroll;min-height: 100vh;
   &.admin {@include linear-gradient(#444, 43deg, #444 0%, #333 46%, #222 100%)}
   &.disable-scroll {overflow: hidden}
 }
 
-section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 0;animation: fade-in .3s ease-in;
+section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 0;
   article {
     > h2 {font-family: 'Merriweather', serif;font-size: 30px;margin-bottom: 15px;}
     + article {margin-top: 20px}
   }
 }
 
-.dev-wrapper {margin: 20px auto;display: flex;flex-flow: row wrap;gap: 15px;
+.dev-wrapper {display: flex;flex-flow: row wrap;gap: 15px;
   &.loading {@include full-spread(fixed)}
 }
 

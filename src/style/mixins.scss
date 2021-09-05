@@ -53,8 +53,8 @@
   &::-webkit-scrollbar-button {opacity: 0}
 }
 
-@mixin primary-color($alpha: 1) {
-  color: rgba(49, 49, 49, $alpha);
+@mixin primary-color($property, $alpha: 1) {
+  $property: rgba(49, 49, 49, $alpha);
 }
 
 $app-width-desktop: 1080px;

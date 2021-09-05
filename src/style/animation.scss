@@ -14,3 +14,14 @@
   85% {opacity: 1}
   100% {transform: scale(1)}
 }
+
+@keyframes scale-in-mobile {
+  0% {opacity: 0;transform: scaleX(.92) scaleY(.269);border-radius: 10px}
+  70% {opacity: 1}
+  85% {border-radius: 10px}
+}
+
+@keyframes scale-in-desktop {
+  0% {opacity: 0;transform: scaleX(.324) scaleY(.3187)}
+  70% {opacity: 1}
+}

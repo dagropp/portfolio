@@ -35,10 +35,8 @@ class ServerService {
     );
   }
 
-  public static async getSectionData(section?: AppSection) {
-    let app_section;
-    if (section) app_section = {app_section: section};
-    return this.get<RestDataRequest, RestDataResponse>("fetch_data", app_section);
+  public static async getSectionData() {
+    return this.get<null, RestDataResponse>("fetch_data");
   }
 
   public static async getTable(table: "projects"): Promise<RestProject[]>;

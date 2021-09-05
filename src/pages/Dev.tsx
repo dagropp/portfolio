@@ -4,6 +4,7 @@ import PreloaderIcon from "../icons/PreloaderIcon";
 import ProjectCard from "../components/cards/ProjectCard";
 import UiService from "../global/UiService";
 import "../style/cards.scss";
+import {localDatabaseService} from "../global/LocalDatabaseService";
 
 const Dev: React.FC = () => {
 
@@ -14,14 +15,25 @@ const Dev: React.FC = () => {
 
   useEffect(() => {
     ServerService.getSectionData()
-      .then(({education, experience, projects}) => {
+      .then(({education, experience, projects, code_snippets}) => {
         setEducation(UiService.sortByField(education, "year_start"));
         setExperience(UiService.sortByField(experience, "year_start"));
-        setProjects(UiService.sortByField(projects, "date_start"));
+
+        const code_snippets_obj: RestCollection<RestCodeSnippet[]> = {};
+        code_snippets.forEach((snippet) => {
+          if (code_snippets_obj[snippet.relation]) {
+            code_snippets_obj[snippet.relation].push(snippet)
+          } else {
+            code_snippets_obj[snippet.relation] = [snippet];
+          }
+        })
+        projects = UiService.sortByField(projects, "date_start");
+        projects.forEach((project) => project.code_snippets = code_snippets_obj[project.id])
+        setProjects(projects);
       })
       // .finally(() => setTimeout(() => setLoading(false), 1000))
       .finally(() => setLoading(false));
-
+      localDatabaseService.initDatabase();
   }, [])
 
   const projectCards = projects.map((item) =>

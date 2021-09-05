@@ -8,6 +8,8 @@ import "./style/main.scss";
 import "./style/popup.scss";
 import "./style/admin.scss";
 import ContactPopup from "./components/popup/ContactPopup";
+import SafeComponent from "./global/SafeApi/SafeComponent";
+import ErrorComponent from "./global/SafeApi/ErrorComponent";
 
 const App: React.FC = () => {
 
@@ -45,7 +47,7 @@ const App: React.FC = () => {
       </Switch>
       <ContactPopup/>
     </>
-  );
+  )
 }
 
 export default App;

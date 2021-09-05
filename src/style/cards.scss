@@ -1,4 +1,5 @@
 @import "mixins";
+@import "animation";
 
 .app-card {background-color: rgba(255, 255, 255, .2);border-radius: 10px;@include restrict-width(350px);padding: 15px;
   cursor: pointer;@include break-inside(avoid);position: relative;overflow: hidden;
@@ -16,23 +17,22 @@
   .links-wrap {
     a {text-decoration: none}
   }
-  &:not(.contact-popup):hover {background-color: rgba(255, 255, 255, .4);@include float-shadow;
-    * {user-select: none}
-  }
+  &:not(.contact-popup):hover {background-color: rgba(255, 255, 255, .4);@include float-shadow}
   &.project-card {
     &.hide {opacity: 0;pointer-events: none;transition: opacity .3s ease-in-out;}
-    &.expand {@include full-spread(fixed, 60px);max-width: none;width: auto;z-index: 10;background-color: #E093B9;
-      cursor: auto;animation: fade-in .3s ease-in-out;overflow-y: scroll;padding: 0;@include float-shadow;
-      .project-head {display: flex;align-items: center;@include sticky;top: 0;background-color: #E093B9;padding: 10px 0;
-        z-index: 2;
-        @include float-shadow;
+    &.expand {background-color: #E093B9;cursor: auto;overflow-y: scroll;padding: 0;@include float-shadow;margin-top: 80px;
+      @include restrict-width($app-width-desktop);height: 684px;
+      .project-head {display: flex;align-items: center;@include sticky;top: 0;background-color: #E093B9;
+        padding: 10px 0;z-index: 2;box-shadow: 0 15px 21px -5px rgb(0, 0, 0, .3);
         .back-button {@include square(45px);margin-right: 10px}
       }
       .project-body {padding: 15px}
+      .project-footer {@include sticky;bottom: 0;height: 65px;display: flex;align-items: center;padding: 0 15px;
+        background-color: #E093B9;width: 100%;z-index: 2;box-shadow: 0 -15px 21px -5px rgb(0, 0, 0, .3)}
     }
     @media only screen and (max-width: 599px) {
       max-width: none;margin: 0 15px;
-      &.expand {@include inset(0);border-radius: 0;margin: 0}
+      &.expand {border-radius: 0;margin: 0;height: 100%}
     }
     @media only screen and (min-width: 600px) {
       @include custom-scroll-bar(rgba(255, 255, 255, .5));
@@ -40,23 +40,24 @@
   }
 }
 
-.list-wrap {display: flex;flex-wrap: wrap;margin: 15px 0;
-  li + li {margin-left: 10px}
+.list-wrap {display: flex;flex-wrap: wrap;margin: 15px 0;gap: 5px 10px;
   .icon-wrapper {display: flex;align-items: center;transition: all .3s ease-in-out;
     @include increase-click-area(-10px);z-index: 1;filter: grayscale(1) contrast(0) brightness(.5);
     svg {height: 25px;min-width: 25px;position: relative;z-index: 1}
-    &::after {content: " ";background-color: rgba(49, 49, 49, 0.95);border-radius: 50%;opacity: 0;
+    &::after {content: " ";@include primary-color(background-color, .95);border-radius: 50%;opacity: 0;
       transition: opacity .3s ease-in-out}
     &:hover {transform: scale(1.2);z-index: 2;filter: none;
       svg {z-index: 10}
       &::after {opacity: 1}
     }
   }
-  &.minified {
-    li + li {margin-left: 7px}
+  &.minified {gap: 0 7px;
     .icon-wrapper {pointer-events: none;
       svg {height: 20px;min-width: 20px}
     }
+  }
+  &.tags {
+    li {background-color: rgba(255, 204, 112, .5) ;padding: 3px 7px;border-radius: 10px}
   }
 }
 
