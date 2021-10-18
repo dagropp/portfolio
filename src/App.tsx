@@ -13,7 +13,7 @@ const App: React.FC = () => {
 
   const location = useLocation();
 
-  const routes = navService.menuItems
+  const routes = navService.getMenuItems()
     .map(({id, path, component, redirect}) =>
       <Route
         key={id}

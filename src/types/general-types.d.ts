@@ -1,4 +1,4 @@
-type AppSection = "dev" | "design" | "about" | "misc" | "admin";
+type AppSection = "stuff" | "about" | "admin";
 type AdminSection = "edit_project" | "edit_code_snippet" | "edit_experience" | "edit_education";
 
 interface MenuItemData<T> {

@@ -1,6 +1,7 @@
 class ServerService {
   private static readonly SERVER_PATH = "http://localhost/portfolio/modules/";
   private static readonly CONTROLLER_PATH = ServerService.SERVER_PATH + "controllers/";
+  private static readonly INITIAL_TIMESTAMP = Date.now();
 
   public static async post<T, U = any>(path: string, data: T): Promise<U> {
     const response: Response = await fetch(
@@ -35,22 +36,27 @@ class ServerService {
     );
   }
 
-  public static async getSectionData(section?: AppSection) {
-    let app_section;
-    if (section) app_section = {app_section: section};
-    return this.get<RestDataRequest, RestDataResponse>("fetch_data", app_section);
+  public static async getSectionData() {
+    return this.get<null, RestDataResponse>("fetch_data");
   }
 
   public static async getTable(table: "projects"): Promise<RestProject[]>;
 
   public static async getTable(table: "code_snippets"): Promise<RestCodeSnippet[]>;
 
-  public static async getTable<T>(table: DataBaseSectionTable): Promise<T[]> {
-    return this.get<{ table: string }, T[]>("fetch_table", {table})
+  public static async getTable(table: "db_updates"): Promise<RestDbUpdate>;
+
+  public static async getTable<T>(table: DataBaseSectionTable): Promise<T> {
+    return this.get<{ table: string }, T>("fetch_table", {table})
   }
 
   public static async getRelationDataList() {
     return this.get<null, RestCollection<RestDataListResponse[]>>("fetch_data_list");
+  }
+
+  private static async shouldUpdate(): Promise<boolean> {
+    const {timestamp} = await this.getTable("db_updates")
+    return new Date(timestamp).getMilliseconds() > this.INITIAL_TIMESTAMP
   }
 
   private static controller = (path: string) => ServerService.CONTROLLER_PATH + path + ".php";

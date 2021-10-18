@@ -1,23 +1,22 @@
-import Dev from "../pages/Dev";
-import Design from "../pages/Design";
-import Misc from "../pages/Misc";
+import Stuff from "../pages/Stuff";
 import About from "../pages/About";
 import Admin from "../pages/admin";
 import EditProject from "../pages/admin/EditProject";
 import EditCodeSnippet from "../pages/admin/EditCodeSnippet";
+import Project from "../pages/Project";
 
 class NavService {
 
-  public get menuItems(): MenuItemData<AppSection>[] {
-    return [
-      {id: "dev", path: "/", redirect: "/dev", hidden: true},
-      {id: "dev", title: "Dev", path: "/dev", component: Dev},
-      // {id: "design", title: "Design", path: "/design", component: Design},
-      // {id: "misc", title: "Misc.", path: "/misc", component: Misc},
-      {id: "about", title: "About", path: "/about", component: About},
-      {id: "admin", path: "/admin", component: Admin, hidden: true},
-      // {id: "admin", path: "/admin", redirect: "/admin", hidden: true},
-    ];
+  private menuItems: MenuItemData<AppSection>[] = [
+    {id: "stuff", path: "/", redirect: "/stuff", hidden: true},
+    {id: "stuff", title: "Stuff", path: "/stuff", component: Stuff},
+    {id: "about", title: "About", path: "/about", component: About},
+    {id: "inner", title: "R", path: "/project/:id", component: Project, hidden: true},
+    {id: "admin", path: "/admin", component: Admin, hidden: true},
+  ];
+
+  public getMenuItems(): MenuItemData<AppSection>[] {
+    return this.menuItems;
   }
 
   public get adminMenuItems(): MenuItemData<AdminSection | AppSection>[] {

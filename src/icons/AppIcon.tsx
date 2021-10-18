@@ -33,7 +33,7 @@ const AppIcon: React.FC<ContainerProps> = (props) => {
   const {name, ...rest} = props;
 
   const icons: RestCollection<React.FC<IconContainerProps>, AppIconType> = {
-    // Dev tools icons
+    // Stuff tools icons
     angularjs: AngularJsIcon,
     css: CSSIcon,
     git: GitIcon,

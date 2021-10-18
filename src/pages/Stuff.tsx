@@ -5,7 +5,7 @@ import ProjectCard from "../components/cards/ProjectCard";
 import UiService from "../global/UiService";
 import "../style/cards.scss";
 
-const Dev: React.FC = () => {
+const Stuff: React.FC = () => {
 
   const [education, setEducation] = useState<RestEducation[]>([]);
   const [experience, setExperience] = useState<RestExperience[]>([]);
@@ -43,4 +43,4 @@ const Dev: React.FC = () => {
   )
 }
 
-export default Dev;
+export default Stuff;
