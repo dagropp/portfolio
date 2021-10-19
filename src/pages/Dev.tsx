@@ -8,16 +8,12 @@ import {localDatabaseService} from "../global/LocalDatabaseService";
 
 const Dev: React.FC = () => {
 
-  const [education, setEducation] = useState<RestEducation[]>([]);
-  const [experience, setExperience] = useState<RestExperience[]>([]);
   const [projects, setProjects] = useState<RestProject[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     ServerService.getSectionData()
       .then(({education, experience, projects, code_snippets}) => {
-        setEducation(UiService.sortByField(education, "year_start"));
-        setExperience(UiService.sortByField(experience, "year_start"));
 
         const code_snippets_obj: RestCollection<RestCodeSnippet[]> = {};
         code_snippets.forEach((snippet) => {
