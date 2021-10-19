@@ -64,7 +64,7 @@ const CodeSnippet: React.FC<ContainerProps> = ({item}) => {
 
   const toggleExpand = () => {
     if (ref.current && !expanded) {
-      setHeight(ref.current.scrollHeight + 30);
+      setHeight(ref.current.scrollHeight + 5);
       setExpanded(true);
     } else if (expanded) {
       setHeight(355);

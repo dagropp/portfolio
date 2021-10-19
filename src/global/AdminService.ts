@@ -4,10 +4,6 @@ class AdminService {
     return ["personal", "student", "job"];
   }
 
-  public static get appSections(): AppSection[] {
-    return ["dev", "design", "about", "misc"]
-  };
-
   public static get toolsList(): RestCollection<DevTool, AppDevToolKey> {
     return {
       html: {display: "HTML"},

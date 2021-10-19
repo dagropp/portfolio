@@ -28,7 +28,7 @@ section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 
   }
   //&:hover {filter: none}
   &.preloader {cursor: auto;
-    svg {height: 500px}
+    svg {height: 500px;width: 100%}
   }
 }
 
@@ -36,9 +36,18 @@ button.app-button {appearance: none;cursor: pointer;transition: background-color
   &.clear {border: 1px solid;background: none;padding: 5px 15px;border-radius: 3em;}
   &.transparent {border: none;background: none}
   &.clear {
+    &.active {background-color: rgba(255, 255, 255, .6)}
     &:hover {background-color: rgba(255, 255, 255, .4)}
   }
 }
 .button-icon {
   &.back svg {stroke: $primary-color}
+}
+
+.details-page {color: $primary-color;font-weight: 500;padding: 0 15px;
+  .code-snippet-wrapper {margin-top: 15px;
+    blockquote {margin-inline: 40px;margin-block: 1em;font-weight: 400;font-style: italic;
+      &::before {content: "—";margin-right: 5px}
+    }
+  }
 }

@@ -1,21 +1,25 @@
-import Dev from "../pages/Dev";
+import Dashboard from "../pages/Dashboard";
 import Design from "../pages/Design";
 import Misc from "../pages/Misc";
 import About from "../pages/About";
 import Admin from "../pages/admin";
 import EditProject from "../pages/admin/EditProject";
 import EditCodeSnippet from "../pages/admin/EditCodeSnippet";
+import ProjectPage from "../pages/ProjectPage";
+import EducationPage from "../pages/EducationPage";
+import ExperiencePage from "../pages/ExperiencePage";
 
 class NavService {
 
   public get menuItems(): MenuItemData<AppSection>[] {
     return [
-      {id: "dev", path: "/", redirect: "/dev", hidden: true},
-      {id: "dev", title: "Dev", path: "/dev", component: Dev},
-      // {id: "design", title: "Design", path: "/design", component: Design},
-      // {id: "misc", title: "Misc.", path: "/misc", component: Misc},
+      {id: "dashboard", path: "/", redirect: "/dashboard", hidden: true},
+      {id: "dashboard", title: "Dashboard", path: "/dashboard", component: Dashboard},
       {id: "about", title: "About", path: "/about", component: About},
       {id: "admin", path: "/admin", component: Admin, hidden: true},
+      {id: "project_page", path: "/project_page/:id", component: ProjectPage, hidden: true},
+      {id: "education_page", path: "/education_page/:id", component: EducationPage, hidden: true},
+      {id: "experience_page", path: "/experience_page/:id", component: ExperiencePage, hidden: true}
       // {id: "admin", path: "/admin", redirect: "/admin", hidden: true},
     ];
   }

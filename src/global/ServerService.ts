@@ -1,3 +1,5 @@
+import {dataRegistry} from "./DataRegistry";
+
 class ServerService {
   private static readonly SERVER_PATH = "http://localhost/portfolio/modules/";
   private static readonly CONTROLLER_PATH = ServerService.SERVER_PATH + "controllers/";
@@ -35,8 +37,10 @@ class ServerService {
     );
   }
 
-  public static async getSectionData() {
-    return this.get<null, RestDataResponse>("fetch_data");
+  public static async getAllItems() {
+    const response = await this.get<null, RestDataResponse>("fetch_data");
+    dataRegistry.setAllFields(response);
+    return response;
   }
 
   public static async getTable(table: "projects"): Promise<RestProject[]>;

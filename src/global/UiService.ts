@@ -32,8 +32,9 @@ class UiService {
     return json?.downloads ?? 0;
   }
 
-  public static sortByField<T>(array: T[], field: keyof T) {
-    return array.sort((a, b) => a[field] > b[field] ? -1 : 1)
+  public static sortByField<T>(array: T[], field: keyof T, descending?: boolean) {
+    const direction = descending ? -1 : 1;
+    return array.sort((a, b) => a[field] > b[field] ? -1 * direction : 1 * direction)
   }
 
   public static getFullDateString(date: Date): string {

@@ -7,7 +7,7 @@ interface ContainerProps {
 
 const ProjectCodeExamples: React.FC<ContainerProps> = ({project}) => {
 
-  const {code_snippets = []} = project;
+  const code_snippets: any[] = []
 
   if (!code_snippets.length) return <></>;
 

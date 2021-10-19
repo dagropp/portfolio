@@ -12,13 +12,13 @@ import SelectRelation from "../../components/admin/SelectRelation";
 import FormLabel from "../../components/form/FormLabel";
 
 const newProject: RestProject = {
-  app_section: "",
   date_end: null,
   date_start: UiService.getFullDateString(new Date()),
   description: null,
   download_link: null,
   github: null,
   id: "proj_",
+  item_type: "project",
   npm: null,
   relation: null,
   site_link: null,
@@ -157,14 +157,6 @@ const EditProject: React.FC = () => {
           <h3 className="form-title"><span className="action">{isNew ? "Add" : "Edit"} Project:</span> <span
             className="title">{current.title}</span></h3>
           {dataInputs}
-          <SelectOptionsList
-            id="app_section"
-            title="App Section"
-            defaultValue={current.app_section}
-            defaultOption="Select App Section"
-            options={AdminService.appSections}
-            required
-          />
           <SelectOptionsList
             id="type"
             title="Project Type"
