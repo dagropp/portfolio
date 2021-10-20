@@ -24,7 +24,7 @@
 
 @mixin float-shadow {box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5)}
 
-@mixin shadow-main {box-shadow: 0 3px 5px 0 #d0d0d0}
+@mixin shadow-main {box-shadow: 0 0 20px 5px rgba(0,0,0,0.3)}
 
 @mixin linear-gradient($fallback, $params...) {
   background-color: $fallback;background: -webkit-linear-gradient($params);background: linear-gradient($params);
@@ -58,10 +58,21 @@
 }
 
 $app-width-desktop: 1080px;
-$primary-color: rgb(49, 49, 49);
+$primary-color: white;
 
 $deep-purple: #4158d0;
 $deep-pink: #c850c0;
 $radiant-yellow: #ffcc70;
+
+$gray-white: #F4F4F4;
+$gray-light: #B7B7B7;
+$gray-medium: #7F7F7F;
+$gray-dark: #636363;
+$gray-darker: #515050;
+$gray-darkest: #434342;
+$gray-black: #272626;
+
+$links-light: #C2D4F0;
+$links-dark: #495E81;
 
 $link-color: $radiant-yellow;

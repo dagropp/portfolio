@@ -9,4 +9,6 @@ interface AppUserData {
   session_timestamp: number;
   session_referrer: string;
   enable_contact_popup: boolean;
+  theme: AppTheme;
 }
+

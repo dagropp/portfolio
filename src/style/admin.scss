@@ -96,9 +96,7 @@ code.code-snippet {font-size: 16px;padding: 40px 15px 25px;background-color: #2B
     .language, .file-name {padding: 3px 5px;border-radius: 6px;background-color: darkgreen}
     .file-name {margin-left: 10px;background-color: dimgray}
     .github {display: flex;color: white;text-decoration: none;margin-left: auto;align-items: center;
-      .icon-wrapper svg {height: 21px;margin-left: 10px;transition: fill .3s ease-in-out;
-        &:hover {fill: $link-color}
-      }
+      .icon-wrapper svg {height: 21px;margin-left: 10px;transition: fill .3s ease-in-out}
     }
   }
   button {height: 30px;position: absolute;bottom: 0;width: 100%;appearance: none;border: none;

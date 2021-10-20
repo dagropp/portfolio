@@ -2,14 +2,16 @@ class StorageService {
   public registerEntrance() {
     const {
       user_id = `${Date.now()}:${btoa(Math.random().toString())}`,
-      enable_contact_popup = true
-    } = StorageService.getFields("user_id", "enable_contact_popup");
+      enable_contact_popup = true,
+      theme = "light"
+    } = StorageService.getFields("user_id", "enable_contact_popup", "theme");
 
     const data: AppUserData = {
       user_id,
       enable_contact_popup,
+      theme,
       session_timestamp: Date.now(),
-      session_referrer: document.referrer || ""
+      session_referrer: document.referrer || "",
     };
 
     StorageService.setAppData(data);

@@ -35,3 +35,5 @@ interface FormListProps<T> {
 }
 
 type ProgrammingLanguage = "css" | "html" | "java" | "js" | "jsx" | "php" | "py" | "sql" | "tsx" | "ts";
+
+type AppTheme = "light" | "dark";

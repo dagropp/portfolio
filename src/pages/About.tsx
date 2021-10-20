@@ -1,6 +1,8 @@
 import React from "react";
 
 const About: React.FC = () => {
+  throw new Error();
+
   return (
     <section className="about-wrapper">
       <p>

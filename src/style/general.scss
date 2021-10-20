@@ -2,14 +2,14 @@
 
 /* General */
 * {margin: 0;padding: 0;box-sizing: border-box;
-  &::selection {background-color: rgba(255, 204, 112, .8);color: $deep-pink}
+  &::selection {background-color: $gray-dark;color: white}
 }
 
 * {font-family: "IBM Plex Sans", sans-serif}
 
 li {list-style: none}
 
-a {color: $link-color;text-decoration: none;cursor: pointer;
+a {color: $links-dark;text-decoration: none;cursor: pointer;
   &:hover {text-decoration: underline}
 }
 
@@ -65,3 +65,12 @@ p {font-size: 16px}
 .black {color: black}
 
 a.dismiss {color: $primary-color}
+
+.app-toggle {position: relative;background-color: $gray-white;height: 30px;width: 60px;display: block;border-radius: 15px;
+  input {appearance: none}
+  .inner-circle {@include circle(24px);background-color: $gray-black;position: absolute;top: 3px;right: 3px;
+    pointer-events: none;transition: .2s ease-in-out;transition-property: transform, color, background-color}
+  &.checked {background-color: $gray-black;
+    .inner-circle {background-color: $gray-white;transform: translateX(-29px);}
+  }
+}

@@ -1,10 +1,18 @@
 @import "mixins";
 @import "animation";
 
+html {
+  background-color: $gray-white;
+  color: $gray-black;
+  transition: .2s linear;
+  transition-property: color, background-color;
+  &.dark {
+    background-color: $gray-black;
+    color: white;
+  }
+}
+
 body {
-  @include linear-gradient($deep-purple, 43deg, $deep-purple 0%, $deep-pink 46%, $radiant-yellow 100%);background-repeat: no-repeat;
-  overflow-y: scroll;min-height: 100vh;
-  &.admin {@include linear-gradient(#444, 43deg, #444 0%, #333 46%, #222 100%)}
   &.disable-scroll {overflow: hidden}
 }
 
@@ -49,5 +57,19 @@ button.app-button {appearance: none;cursor: pointer;transition: background-color
     blockquote {margin-inline: 40px;margin-block: 1em;font-weight: 400;font-style: italic;
       &::before {content: "—";margin-right: 5px}
     }
+  }
+}
+
+.error-page {text-align: center;padding: 10px;
+  h1 {font-family: "Merriweather", Serif}
+  .error-image {@include circle(300px);overflow: hidden;margin: 20px auto;@include shadow-main}
+  p {}
+  code {background-color: $gray-light;color: black;font-family: monospace;font-size: 12px;padding: 2px 3px;border-radius: 4px}
+}
+
+.lazy-image-wrapper {position: relative;
+  .main-image, .placeholder-image {
+    transition: .2s opacity ease-in-out;@include full-spread;object-fit: contain;@include square(100%);
+    &.hide {opacity: 0;pointer-events: none}
   }
 }

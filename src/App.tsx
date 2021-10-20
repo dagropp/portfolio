@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {userService} from "./global/UserService";
 import {Route, Switch, Redirect, useLocation} from "react-router-dom";
 import AppMenu from "./components/AppMenu";
@@ -8,10 +8,13 @@ import "./style/main.scss";
 import "./style/popup.scss";
 import "./style/admin.scss";
 import ContactPopup from "./components/popup/ContactPopup";
+import AppContext from "./context/AppContext";
+import ThemeToggle from "./components/common/ThemeToggle";
 
 const App: React.FC = () => {
 
   const location = useLocation();
+  const [theme, setTheme] = useState<AppTheme>("light");
 
   const routes = navService.getMenuItems()
     .map(({id, path, component, redirect}) =>
@@ -38,13 +41,17 @@ const App: React.FC = () => {
   }, [location.pathname]);
 
   return (
-    <>
-      <AppMenu/>
-      <Switch location={location}>
-        {routes}
-      </Switch>
-      <ContactPopup/>
-    </>
+    <AppContext.Provider value={{theme, setTheme}}>
+      <div className={`app ${theme}`}>
+        <AppMenu/>
+        <ThemeToggle/>
+
+        <Switch location={location}>
+          {routes}
+        </Switch>
+        <ContactPopup/>
+      </div>
+    </AppContext.Provider>
   )
 }
 

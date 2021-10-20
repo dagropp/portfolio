@@ -1,6 +1,4 @@
 import Dashboard from "../pages/Dashboard";
-import Design from "../pages/Design";
-import Misc from "../pages/Misc";
 import About from "../pages/About";
 import Admin from "../pages/admin";
 import EditProject from "../pages/admin/EditProject";
@@ -11,7 +9,7 @@ import ExperiencePage from "../pages/ExperiencePage";
 
 class NavService {
 
-  public get menuItems(): MenuItemData<AppSection>[] {
+  public getMenuItems(): MenuItemData<AppSection>[] {
     return [
       {id: "dashboard", path: "/", redirect: "/dashboard", hidden: true},
       {id: "dashboard", title: "Dashboard", path: "/dashboard", component: Dashboard},
@@ -32,7 +30,7 @@ class NavService {
   }
 
   public getPageKey(path: string): AppSection | null {
-    const item = this.menuItems.find(item => item.path === path);
+    const item = this.getMenuItems().find(item => item.path === path);
     return item?.id ?? null;
   }
 
