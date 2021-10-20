@@ -1,4 +1,5 @@
 import AdminService from "./AdminService";
+import React from "react";
 
 class UiService {
   public static parseYears(start: string, end: Nullable<string>): string {
@@ -31,8 +32,9 @@ class UiService {
     return json?.downloads ?? 0;
   }
 
-  public static sortByField<T>(array: T[], field: keyof T) {
-    return array.sort((a, b) => a[field] > b[field] ? -1 : 1)
+  public static sortByField<T>(array: T[], field: keyof T, descending?: boolean) {
+    const direction = descending ? -1 : 1;
+    return array.sort((a, b) => a[field] > b[field] ? -1 * direction : 1 * direction)
   }
 
   public static getFullDateString(date: Date): string {
@@ -45,6 +47,10 @@ class UiService {
   public static getToolsList(tools: string): AppIconType[] {
     const list = tools.split(",") as AppDevToolKey[];
     return list.filter((item) => item in AdminService.toolsList);
+  }
+
+  public static getTagsList(tags: string): string[] {
+    return tags.split(",");
   }
 
   public static getDevToolsList(tools: string): AppIconType[] {
@@ -78,18 +84,38 @@ class UiService {
 
   public static setQueryString(obj: RestCollection<any>): string {
     const query = Object.entries(obj)
-      .map((pair) => pair.join("="))
+      .map((pair) => {
+        if (typeof pair[1] === "undefined") return;
+        pair[1] = "" + pair[1];
+        return pair.join("=");
+      })
+      .filter(entry => entry)
       .join("&");
     return "?" + query;
   }
 
-  public static parseQueryString(query: string): RestCollection<string> {
+  public static parseQueryString(query: string): RestCollection<any> {
     return Object.fromEntries(
       query
-        .substring(1)
+        .substring(query.startsWith("?") ? 1 : 0)
         .split("&")
-        .map((pair) => pair.split("="))
+        .map((pair) => {
+          let [key, value] = pair.split("=");
+          try {
+            value = JSON.parse(decodeURI(value));
+          } catch {
+            value = decodeURI(value);
+          }
+          return [key, value];
+        })
     );
+  }
+
+  public static validateComponent(values: any[], component: any): Nullable<React.ReactElement> {
+    if (values.some((val: any) => !!val)) {
+      return null
+    }
+    return component;
   }
 
   private static getMonthString(date: Date): string {

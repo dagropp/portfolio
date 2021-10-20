@@ -1,31 +1,39 @@
 import React from "react";
 import AppCard from "./AppCard";
 import UiService from "../../global/UiService";
-import LinksList from "../lists/LinksList";
 import ToolsList from "../lists/ToolsList";
+import CardDescription from "./CardDescription";
 
 interface ContainerProps {
   item: RestExperience;
 }
 
 const ExperienceCard: React.FC<ContainerProps> = ({item}) => {
-  const {app_link, app_section, company, description, link, position, tags, tools, year_start, year_end, id} = item;
-  const year = UiService.parseYears(year_start, year_end);
+  const {company, description, title, tools, date_start, date_end, id} = item;
+  const date = UiService.parseYears(date_start, date_end);
 
   return (
-    <AppCard className={`experience-card ${app_section}`} id={id} metaTitle={`${position}, ${company}`}>
-      <h2>{position}</h2>
-      <h3>{company}</h3>
-      <p>{year}</p>
-      {description && <p>{description}</p>}
-      <ToolsList tools={tools}/>
-      <LinksList
-        site_link={link}
-        app_link={app_link}
+    <AppCard
+      className="experience-card"
+      id={id}
+      metaTitle={`${title}, ${company}`}
+      href={"/experience_page/" + id}
+    >
+      <h2 className="title">{title}</h2>
+      <p className="date">{date}</p>
+      <ToolsList
+        className="minified"
+        tools={tools}
       />
-      <div className="tags-wrap">
-        {tags?.split(",").map((tag: string) => <span className="tag" key={tag}># {tag}</span>)}
-      </div>
+      <CardDescription
+        className="minified"
+        description={description}
+      />
+      <button
+        className="app-button clear"
+        type="button"
+      >Show More...
+      </button>
     </AppCard>
   )
 }

@@ -45,7 +45,7 @@ const App: React.FC = () => {
       </Switch>
       <ContactPopup/>
     </>
-  );
+  )
 }
 
 export default App;

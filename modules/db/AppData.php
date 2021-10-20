@@ -4,14 +4,16 @@ require_once "DatabaseService.php";
 
 class AppData
 {
-    const APP_SECTIONS_TABLES = ["education", "projects", "experience"];
+    const APP_SECTIONS_TABLES = ["education", "projects", "experience", "code_snippets"];
 
     public static function getSectionData(): array
     {
         $result = [];
+
         foreach (self::APP_SECTIONS_TABLES as $table) {
-            $result[$table] = DatabaseService::instance()->getData($table);
+            $result[$table] = DatabaseService::instance()->runSql("SELECT * FROM `$table`");
         }
+
         return $result;
     }
 

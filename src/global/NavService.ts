@@ -1,22 +1,27 @@
-import Stuff from "../pages/Stuff";
+import Dashboard from "../pages/Dashboard";
+import Design from "../pages/Design";
+import Misc from "../pages/Misc";
 import About from "../pages/About";
 import Admin from "../pages/admin";
 import EditProject from "../pages/admin/EditProject";
 import EditCodeSnippet from "../pages/admin/EditCodeSnippet";
-import Project from "../pages/Project";
+import ProjectPage from "../pages/ProjectPage";
+import EducationPage from "../pages/EducationPage";
+import ExperiencePage from "../pages/ExperiencePage";
 
 class NavService {
 
-  private menuItems: MenuItemData<AppSection>[] = [
-    {id: "stuff", path: "/", redirect: "/stuff", hidden: true},
-    {id: "stuff", title: "Stuff", path: "/stuff", component: Stuff},
-    {id: "about", title: "About", path: "/about", component: About},
-    {id: "inner", title: "R", path: "/project/:id", component: Project, hidden: true},
-    {id: "admin", path: "/admin", component: Admin, hidden: true},
-  ];
-
-  public getMenuItems(): MenuItemData<AppSection>[] {
-    return this.menuItems;
+  public get menuItems(): MenuItemData<AppSection>[] {
+    return [
+      {id: "dashboard", path: "/", redirect: "/dashboard", hidden: true},
+      {id: "dashboard", title: "Dashboard", path: "/dashboard", component: Dashboard},
+      {id: "about", title: "About", path: "/about", component: About},
+      {id: "admin", path: "/admin", component: Admin, hidden: true},
+      {id: "project_page", path: "/project_page/:id", component: ProjectPage, hidden: true},
+      {id: "education_page", path: "/education_page/:id", component: EducationPage, hidden: true},
+      {id: "experience_page", path: "/experience_page/:id", component: ExperiencePage, hidden: true}
+      // {id: "admin", path: "/admin", redirect: "/admin", hidden: true},
+    ];
   }
 
   public get adminMenuItems(): MenuItemData<AdminSection | AppSection>[] {

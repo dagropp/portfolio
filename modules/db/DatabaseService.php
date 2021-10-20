@@ -18,18 +18,6 @@ class DatabaseService
         return new DatabaseService();
     }
 
-    /**
-     * @param string $table
-     * @return array
-     */
-    public function getData(string $table, string $conditionKey = null, string $conditionValue = null): array
-    {
-        $sql = "SELECT * FROM $table";
-        if ($conditionKey && $conditionValue) $sql .= " WHERE `$conditionKey` = '$conditionValue'";
-        $query = $this->connection->query($sql);
-        return $query ? $query->fetch_all(MYSQLI_ASSOC) : [];
-    }
-
     public function runSql(string $sql): array
     {
         $query = $this->connection->query($sql);

@@ -1,9 +1,8 @@
-import React, {useRef} from "react";
+import React from "react";
 import AppCard from "./AppCard";
 import UiService from "../../global/UiService";
 import ToolsList from "../lists/ToolsList";
 import CardDescription from "./CardDescription";
-import {useHistory} from "react-router-dom";
 
 interface ContainerProps {
   item: RestProject;
@@ -11,24 +10,14 @@ interface ContainerProps {
 
 const ProjectCard: React.FC<ContainerProps> = ({item}) => {
 
-  const {
-    app_section, date_start, date_end, description, download_link, id, title, npm, site_link, tags, tools, type,
-    github, skills, relation
-  } = item;
-  const cardRef = useRef<HTMLDivElement>(null);
+  const {date_start, date_end, description, id, title, tools} = item;
   const date = UiService.parseMonths(date_start, date_end);
-  const history = useHistory();
-
-  const goToProject = () => {
-    history.push({pathname: "/project/" + id, state: {item}});
-  }
 
   return (
     <AppCard
       className="project-card"
       id={id}
-      onClick={goToProject}
-      cardRef={cardRef}
+      href={"/project_page/" + id}
     >
       <h2 className="title">{title}</h2>
       <p className="date">{date}</p>
@@ -43,8 +32,7 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
       <button
         className="app-button clear"
         type="button"
-      >Show More...
-      </button>
+      >Show More...</button>
     </AppCard>
   )
 }

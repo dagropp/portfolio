@@ -20,7 +20,7 @@ const AppOverlay: React.FC<ContainerProps> = ({children, isOpen, setIsOpen, hide
     <div
       id="app_overlay"
       onClick={overlayClick}
-      className={`app-overlay flex-row-centered ${isOpen ? "is-open" : ""} ${hideOverlay ? "transparent" : ""}`}
+      className={`app-overlay ${isOpen ? "is-open" : ""} ${hideOverlay ? "transparent" : ""}`}
     >{children}</div>
   )
 }

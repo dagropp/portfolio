@@ -1,52 +1,47 @@
-interface RestEducation {
-  app_section: AppSection;
+interface RestCommon {
+  description: Nullable<string>;
+  id: string;
+  tags: Nullable<string>;
+  title: string;
+  tools: Nullable<string>;
+  date_end: Nullable<string>;
+  date_start: string;
+  item_type: "education" | "project" | "experience";
+}
+
+interface RestEducation extends RestCommon {
   degree: "certificate" | "ba" | "ma" | "none";
   description: string | null;
   id: string;
   institution: string;
   tags: string | null;
   title: string;
-  tools: string | null;
-  year_end: string | null;
-  year_start: string;
+  item_type: "education";
 }
 
-interface RestExperience {
+interface RestExperience extends RestCommon {
   app_link: Nullable<string>;
-  app_section: AppSection;
+  item_type: "experience";
   company: string;
-  description: Nullable<string>;
-  id: string;
   link: Nullable<string>;
-  position: string;
-  tags: Nullable<string>;
-  tools: Nullable<string>;
-  year_end: Nullable<string>;
-  year_start: string;
 }
 
-interface RestProject {
-  app_section: AppSection | string;
-  date_end: Nullable<string>;
-  date_start: string;
-  description: Nullable<string>;
+interface RestProject extends RestCommon {
   download_link: Nullable<string>;
   github: Nullable<string>;
-  id: string;
   npm: Nullable<string>;
   relation: Nullable<string>;
   site_link: Nullable<string>;
-  tags: Nullable<string>;
-  title: string;
-  tools: Nullable<string>;
   skills: Nullable<string>;
   type: string;
+  item_type: "project";
 }
 
 interface RestDataResponse {
   education: RestEducation[];
   projects: RestProject[];
   experience: RestExperience[];
+  code_snippets: RestCodeSnippet[];
 }
 
 interface RestCodeSnippet {

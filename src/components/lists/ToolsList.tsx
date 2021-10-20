@@ -9,7 +9,7 @@ interface ContainerProps {
 
 const ToolsList: React.FC<ContainerProps> = ({tools, className = ""}) => {
 
-  if (!tools) return <></>;
+  if (!tools) return null;
 
   const items = UiService.getToolsList(tools).map((tool) =>
     <li key={tool}>

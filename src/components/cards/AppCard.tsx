@@ -1,23 +1,26 @@
-import React, {HTMLProps, RefObject} from "react";
+import React, {HTMLProps} from "react";
+import {Link} from "react-router-dom";
 
-interface ContainerProps extends HTMLProps<HTMLDivElement> {
+interface ContainerProps {
   metaTitle?: string;
-  cardRef?: RefObject<HTMLDivElement>;
+  href: string;
+  id: string;
+  className?: string;
 }
 
-const AppCard: React.FC<ContainerProps> = ({children, metaTitle, className = "", cardRef, ...rest}) => {
+const AppCard: React.FC<ContainerProps> = ({children, metaTitle, id, href, className = ""}) => {
 
   return (
-    <div
+    <Link
+      to={href}
+      id={id}
       className={`app-card ${className}`}
       data-meta_title={metaTitle}
-      ref={cardRef}
-      {...rest}
     >
       <div className="app-card-inner">
         {children}
       </div>
-    </div>
+    </Link>
   )
 }
 

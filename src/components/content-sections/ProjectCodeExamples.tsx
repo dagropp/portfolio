@@ -1,41 +1,33 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import CodeSnippet from "./CodeSnippet";
-import ServerService from "../../global/ServerService";
 
 interface ContainerProps {
-  projectId: string;
+  project: RestProject;
 }
 
-const ProjectCodeExamples: React.FC<ContainerProps> = ({projectId}) => {
+const ProjectCodeExamples: React.FC<ContainerProps> = ({project}) => {
 
-  const [codeSnippets, setCodeSnippets] = useState<RestCodeSnippet[]>([]);
+  const code_snippets: any[] = []
 
-  useEffect(() => {
-    ServerService.getTable("code_snippets")
-      .then((res) => {
-        setCodeSnippets(res.filter(snippet => snippet.relation === projectId))
-      });
-  }, [])
+  if (!code_snippets.length) return <></>;
+
+  const snippets = code_snippets.map((snippet) =>
+    <div
+      className="code-segment"
+      key={snippet.id}
+    >
+      {snippet.description && <p>{snippet.description}</p>}
+      <CodeSnippet
+        item={snippet}
+      />
+    </div>
+  );
 
   return (
-    codeSnippets.length
-      ?
-      <article className="code-examples">
-        <h3 className="italic">Some cool stuff I got to do for this project...</h3>
-        {codeSnippets.map((item) =>
-          <div
-            className="code-segment"
-            key={item.id}
-          >
-            {item.description && <p>{item.description}</p>}
-            <CodeSnippet
-              item={item}
-            />
-          </div>
-        )}
-      </article>
-      :
-      <></>
+    <article className="code-examples">
+      <h3 className="italic">Some cool stuff I got to do for this project...</h3>
+      {snippets}
+    </article>
   )
 }
 
