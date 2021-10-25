@@ -34,6 +34,7 @@ const ThemeToggle: React.FC<ContainerProps> = () => {
         onChange={handleChange}
       />
       <span className="inner-circle"/>
+      <span className="icon">{theme === "light" ? "☀️" : "🌜"}</span>
     </label>
   )
 }

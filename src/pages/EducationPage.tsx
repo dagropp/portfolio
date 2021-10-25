@@ -11,15 +11,17 @@ const EducationPage: React.FC = () => {
 
   const [item, setItem] = useState<RestEducation>();
 
-  const init = (id: string) => {
+  const init = async (id: string, didFetch?: boolean): Promise<RestEducation> => {
     const education = dataRegistry.getEducation();
     const item = education.find((entry) => entry.id === id);
     if (item) {
       setItem(item);
+      return item;
     } else {
-      ServerService.getAllItems().then(init.bind(null, id));
+      if (didFetch) throw new Error("Project not found");
+      await ServerService.getAllItems();
+      return init(id, true);
     }
-    return true;
   }
 
   const {title, date_start, date_end, tools, description, tags} = item! ?? {};

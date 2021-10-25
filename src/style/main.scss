@@ -3,7 +3,7 @@
 
 html {
   background-color: $gray-white;
-  color: $gray-black;
+  color: $primary-color;
   transition: .2s linear;
   transition-property: color, background-color;
   &.dark {
@@ -71,5 +71,18 @@ button.app-button {appearance: none;cursor: pointer;transition: background-color
   .main-image, .placeholder-image {
     transition: .2s opacity ease-in-out;@include full-spread;object-fit: contain;@include square(100%);
     &.hide {opacity: 0;pointer-events: none}
+  }
+}
+
+.theme-toggle {margin: auto;background-color: $links-dark;border: 1px solid $sticky-yellow-light;
+  .icon {position: absolute;left: 2px;font-size: 18px;top: 0;bottom: 0;@include flex-centered;pointer-events: none}
+  .inner-circle {z-index: 1;background-color: $sticky-yellow-light;top: 3px;
+    &:hover {background-color: $sticky-yellow}
+  }
+  &.checked {background-color: $sticky-yellow-light;border: 1px solid $links-dark;
+    .inner-circle {background-color: $links-dark;
+      &:hover {background-color: $gray-darkest}
+    }
+    .icon {left: auto;right: 2px}
   }
 }

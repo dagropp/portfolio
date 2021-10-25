@@ -68,8 +68,8 @@ a.dismiss {color: $primary-color}
 
 .app-toggle {position: relative;background-color: $gray-white;height: 30px;width: 60px;display: block;border-radius: 15px;
   input {appearance: none}
-  .inner-circle {@include circle(24px);background-color: $gray-black;position: absolute;top: 3px;right: 3px;
-    pointer-events: none;transition: .2s ease-in-out;transition-property: transform, color, background-color}
+  .inner-circle {@include circle(22px);background-color: $gray-black;position: absolute;top: 4px;right: 4px;
+    transition: .2s ease-in-out;transition-property: transform, color, background-color;cursor: pointer}
   &.checked {background-color: $gray-black;
     .inner-circle {background-color: $gray-white;transform: translateX(-29px);}
   }

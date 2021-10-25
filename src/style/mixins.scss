@@ -58,7 +58,6 @@
 }
 
 $app-width-desktop: 1080px;
-$primary-color: white;
 
 $deep-purple: #4158d0;
 $deep-pink: #c850c0;
@@ -71,6 +70,15 @@ $gray-dark: #636363;
 $gray-darker: #515050;
 $gray-darkest: #434342;
 $gray-black: #272626;
+
+$primary-color: $gray-black;
+$primary-color-dark: white;
+
+$sticky-yellow: #FEF64F;
+$sticky-yellow-light: #FEFFA0;
+$sticky-cyan: #7FFCFE;
+$sticky-pink: #FD64A3;
+$sticky-pink-light: #FD7EB9;
 
 $links-light: #C2D4F0;
 $links-dark: #495E81;

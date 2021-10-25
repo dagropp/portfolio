@@ -15,7 +15,7 @@ const Admin: React.FC = () => {
     return () => document.body.classList.remove("admin");
   }, []);
 
-  const menu = navService.adminMenuItems
+  const menu = navService.getAdminMenuItems()
     .filter((item) => !item.hidden)
     .map(({id, path, title}) =>
       <li key={id}>
@@ -25,7 +25,7 @@ const Admin: React.FC = () => {
       </li>
     )
 
-  const routes = navService.adminMenuItems
+  const routes = navService.getAdminMenuItems()
     .map(({id, path, component}) =>
       <Route
         key={id}

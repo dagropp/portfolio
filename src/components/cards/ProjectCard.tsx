@@ -29,10 +29,6 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
         className="minified"
         description={description}
       />
-      <button
-        className="app-button clear"
-        type="button"
-      >Show More...</button>
     </AppCard>
   )
 }

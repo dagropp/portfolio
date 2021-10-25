@@ -12,15 +12,17 @@ const ExperiencePage: React.FC = () => {
   const [item, setItem] = useState<RestExperience>();
   const {title, date_start, date_end, tools, description, tags} = item! ?? {};
 
-  const init = (id: string) => {
+  const init = async (id: string, didFetch?: boolean): Promise<RestExperience> => {
     const experience = dataRegistry.getExperience();
     const item = experience.find((entry) => entry.id === id);
     if (item) {
       setItem(item);
+      return item;
     } else {
-      ServerService.getAllItems().then(init.bind(null, id));
+      if (didFetch) throw new Error("Project not found");
+      await ServerService.getAllItems();
+      return init(id, true);
     }
-    return true;
   }
 
   return (

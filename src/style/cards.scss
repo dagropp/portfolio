@@ -1,17 +1,18 @@
 @import "mixins";
 @import "animation";
 
-.app-card {background-color: rgba(255, 255, 255, .2);border-radius: 10px;padding: 15px;display: block;
-  cursor: pointer;@include break-inside(avoid);position: relative;overflow: hidden;
-  @include restrict-width(350px);min-height: 218px;
-  color: $primary-color;transition: .3s linear;transition-property: background-color, box-shadow;
+.app-card {background-color: $gray-light;border-radius: 10px;padding: 15px;display: block;
+  position: relative;overflow: hidden;@include restrict-width(350px);
+  color: $primary-color;transition: .3s linear;transition-property: background-color, color, box-shadow;
   .title {font-size: 20px;font-family: 'Merriweather', serif}
   .date {font-size: 14px;font-style: italic;margin: 5px 0}
   .description.minified {max-height: 60px;overflow-y: hidden;-webkit-mask-image: linear-gradient(black, transparent)}
-  &:not(.contact-popup):hover {background-color: rgba(255, 255, 255, .4);@include float-shadow;text-decoration: none}
+  &:not(.contact-popup):hover {background-color: $gray-white;@include shadow-main;text-decoration: none}
   @media only screen and (max-width: 599px) {
     max-width: none;margin: 0 15px;
   }
+  &:nth-of-type(odd) {background-color: $sticky-cyan}
+  &:nth-of-type(even) {background-color: $sticky-pink-light}
 }
 
 .list-wrap {display: flex;flex-wrap: wrap;margin: 15px 0;gap: 5px 10px;
@@ -45,4 +46,13 @@
 
 .content-card-popup {
   @include full-spread(fixed);max-width: none;width: 100%;background-color: white;z-index: 2
+}
+
+html.dark {
+  .app-card {background-color: $gray-darker;color: $primary-color-dark;
+    &:not(.contact-popup):hover {background-color: $gray-medium;box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.15)}
+  }
+  .list-wrap {
+    .icon-wrapper {filter: grayscale(1) contrast(0) brightness(2)}
+  }
 }

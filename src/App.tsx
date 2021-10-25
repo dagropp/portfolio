@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {userService} from "./global/UserService";
 import {Route, Switch, Redirect, useLocation} from "react-router-dom";
-import AppMenu from "./components/AppMenu";
+import AppHeader from "./components/header/AppHeader";
 import {navService} from "./global/NavService";
 import "./style/general.scss";
 import "./style/main.scss";
@@ -9,11 +9,11 @@ import "./style/popup.scss";
 import "./style/admin.scss";
 import ContactPopup from "./components/popup/ContactPopup";
 import AppContext from "./context/AppContext";
-import ThemeToggle from "./components/common/ThemeToggle";
 
 const App: React.FC = () => {
 
-  const location = useLocation();
+  const location = useLocation<any>();
+
   const [theme, setTheme] = useState<AppTheme>("light");
 
   const routes = navService.getMenuItems()
@@ -34,6 +34,7 @@ const App: React.FC = () => {
       () => userService.trackUser(location.pathname, "exit"),
       {once: true}
     );
+    navService.setLocation(location);
   }, []);
 
   useEffect(() => {
@@ -43,9 +44,7 @@ const App: React.FC = () => {
   return (
     <AppContext.Provider value={{theme, setTheme}}>
       <div className={`app ${theme}`}>
-        <AppMenu/>
-        <ThemeToggle/>
-
+        <AppHeader/>
         <Switch location={location}>
           {routes}
         </Switch>

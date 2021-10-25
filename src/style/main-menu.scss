@@ -1,6 +1,7 @@
 @import "mixins";
 
-.main-header {@include sticky;top: 0;backdrop-filter: blur(15px) grayscale(20%);z-index: 1;
+.main-header {@include sticky;top: 0;z-index: 2;background-color: $gray-white;transition: .2s linear;
+  transition-property: background-color;
   .menu-wrapper {@include restrict-width($app-width-desktop);margin: auto;
     .menu-list {display: flex;justify-content: space-between;height: 60px;
       .menu-list-item {flex: 1;text-align: center;border-radius: 10px;
@@ -11,4 +12,8 @@
     }
   }
   &:hover .menu-wrapper .menu-list .menu-list-item.active-page:not(:hover) {background: none}
+}
+
+html.dark {
+  .main-header {background-color: $gray-black}
 }
