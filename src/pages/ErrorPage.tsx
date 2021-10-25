@@ -1,31 +1,28 @@
-import React, {useEffect, useRef} from "react";
+import React from "react";
 import LazyLoadImage from "../components/common/LazyLoadImage";
 
 interface ContainerProps {
-
+  title: string;
+  subtitle?: string;
+  imageSrc: string;
+  placeholderSrc: string;
 }
 
-const ErrorPage: React.FC<ContainerProps> = ({}) => {
+const ErrorPage: React.FC<ContainerProps> = ({title, subtitle, imageSrc, placeholderSrc, children}) => {
 
   const redirect = () => window.location.href = "/";
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    videoRef.current?.play();
-  }, [videoRef.current])
-
   return (
     <section className="error-page">
-      <h1>Something went horribly wrong!</h1>
+      <h1>{title}</h1>
       <LazyLoadImage
         className="error-image"
-        src="/assets/images/error_animation.gif"
-        placeholder="/assets/images/error_animation_placeholder.jpg"
+        src={imageSrc}
+        placeholder={placeholderSrc}
         alt="Error"
       />
-      <p>It's not you, it's me...</p>
-      <p>Luckily I surrounded the app with an <code>&lt;ErrorBoundary&gt;</code></p>
+      {subtitle && <p>{subtitle}</p>}
+      {children}
       <p>But - no use crying 😭 over spilled milk 🥛</p>
       <p>
         <button className="app-button clear" onClick={redirect}>Just go home...</button>

@@ -52,12 +52,16 @@ button.app-button {appearance: none;cursor: pointer;transition: background-color
   &.back svg {stroke: $primary-color}
 }
 
-.details-page {color: $primary-color;font-weight: 500;padding: 0 15px;
+.details-page {color: $primary-color;font-weight: 500;padding: 0 15px;transition: .2s linear color;
   .code-snippet-wrapper {margin-top: 15px;
     blockquote {margin-inline: 40px;margin-block: 1em;font-weight: 400;font-style: italic;
       &::before {content: "—";margin-right: 5px}
     }
   }
+}
+
+html.dark {
+  .details-page {color: $primary-color-dark;}
 }
 
 .error-page {text-align: center;padding: 10px;
@@ -71,6 +75,12 @@ button.app-button {appearance: none;cursor: pointer;transition: background-color
   .main-image, .placeholder-image {
     transition: .2s opacity ease-in-out;@include full-spread;object-fit: contain;@include square(100%);
     &.hide {opacity: 0;pointer-events: none}
+  }
+}
+
+.breadcrumbs {
+  .breadcrumbs-item {color: white;
+    + .breadcrumbs-item {margin-left: 10px;}
   }
 }
 

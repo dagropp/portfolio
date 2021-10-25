@@ -1,4 +1,4 @@
-import {dataRegistry} from "./DataRegistry";
+import {recoilService} from "./recoil/RecoilService";
 
 class ServerService {
   private static readonly SERVER_PATH = "http://localhost/portfolio/modules/";
@@ -40,7 +40,8 @@ class ServerService {
 
   public static async getAllItems() {
     const response = await this.get<null, RestDataResponse>("fetch_data");
-    dataRegistry.setAllFields(response);
+    const [, setState] = recoilService.getRecoilState("appDataState");
+    setState(response);
     return response;
   }
 

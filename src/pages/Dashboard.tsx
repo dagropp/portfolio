@@ -4,29 +4,27 @@ import PreloaderIcon from "../icons/PreloaderIcon";
 import UiService from "../global/UiService";
 import "../style/cards.scss";
 import CardsSwitch from "../components/cards/CardsSwitch";
-import {useHistory} from "react-router-dom";
-const win = window as any;
-win.count = 0;
+import {useSetRecoilState} from "recoil";
+import {appDataState} from "../global/recoil/atoms";
+
 const Dashboard: React.FC = () => {
 
   const [items, setItems] = useState<RestCommon[]>([]);
   const [filtered, setFiltered] = useState<RestCommon[]>([]);
   const [typeFilters, setTypeFilters] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
+  const setAppDataState = useSetRecoilState(appDataState);
 
   useEffect(() => {
     ServerService.getAllItems()
       .then(({education, experience, projects, code_snippets}) => {
-        window.history.pushState({education, experience, projects, code_snippets}, 'code');
+        setAppDataState({education, experience, projects, code_snippets});
         const items: RestCommon[] = UiService.sortByField([...education, ...experience, ...projects], "date_start");
         setItems(items);
         setFiltered(items);
       })
-      // .finally(() => setTimeout(() => setLoading(false), 1000))
       .finally(() => setLoading(false));
   }, [])
-  win.count++
 
   useEffect(() => {
     if (typeFilters.length) {

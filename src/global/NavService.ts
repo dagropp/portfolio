@@ -38,14 +38,24 @@ class NavService {
     return this.adminMenuItems;
   }
 
-  public getPageKey(pathname?: string): AppSection | null {
+  public getPageKey(pathname: string = this.location?.pathname ?? ""): AppSection | null {
     const item = this.getMenuItems().find(item => item.path === pathname);
-    return item?.id ?? null;
+    if (item) {
+      return item.id
+    } else {
+      if (pathname.includes("/project_page/")) return "project_page";
+      else if (pathname.includes("/education_page/")) return "education_page";
+      else if (pathname.includes("/experience_page/")) return "experience_page";
+      return null;
+    }
   }
 
-  public isPage(page: AppSection, pathname?: string): boolean {
-    const thisPathname = pathname ?? this.location?.pathname ?? "";
-    return this.getPageKey(thisPathname) === page;
+  public isPage(page: AppSection, pathname: string = this.location?.pathname ?? ""): boolean {
+    return this.getPageKey(pathname) === page;
+  }
+
+  public setTitle(title: string = "Portfolio"): void {
+    document.title = `Daniel Gropp ⚡ ${title}`
   }
 }
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {userService} from "./global/UserService";
 import {Route, Switch, Redirect, useLocation} from "react-router-dom";
 import AppHeader from "./components/header/AppHeader";
@@ -8,13 +8,15 @@ import "./style/main.scss";
 import "./style/popup.scss";
 import "./style/admin.scss";
 import ContactPopup from "./components/popup/ContactPopup";
-import AppContext from "./context/AppContext";
+import ErrorPage from "./pages/ErrorPage";
+import {useRecoilState} from "recoil";
+import {recoilService} from "./global/recoil/RecoilService";
+import {appDataState, breadcrumbsState} from "./global/recoil/atoms";
 
 const App: React.FC = () => {
 
   const location = useLocation<any>();
-
-  const [theme, setTheme] = useState<AppTheme>("light");
+  recoilService.setRecoilState(useRecoilState(appDataState), useRecoilState(breadcrumbsState));
 
   const routes = navService.getMenuItems()
     .map(({id, path, component, redirect}) =>
@@ -42,15 +44,21 @@ const App: React.FC = () => {
   }, [location.pathname]);
 
   return (
-    <AppContext.Provider value={{theme, setTheme}}>
-      <div className={`app ${theme}`}>
+      <div className="app">
         <AppHeader/>
         <Switch location={location}>
           {routes}
+          <Route path="/">
+            <ErrorPage
+              title="Seems like you're lost..."
+              subtitle="I hope you will find what you're looking for"
+              imageSrc="/assets/images/lost_animation.gif"
+              placeholderSrc="/assets/images/lost_animation_placeholder.gif"
+            />
+          </Route>
         </Switch>
         <ContactPopup/>
       </div>
-    </AppContext.Provider>
   )
 }
 

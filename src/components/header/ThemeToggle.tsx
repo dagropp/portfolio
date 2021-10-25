@@ -29,7 +29,7 @@ const ThemeToggle: React.FC<ContainerProps> = () => {
     >
       <input
         type="checkbox"
-        checked={checked}
+        defaultChecked={checked}
         id="themeToggle"
         onChange={handleChange}
       />

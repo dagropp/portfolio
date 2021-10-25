@@ -38,10 +38,12 @@ class UiService {
   }
 
   public static getFullDateString(date: Date): string {
-    const year = date.getFullYear();
-    const month = this.getMonthString(date);
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    const util = date.toLocaleDateString.bind(date, navigator.language);
+    return [
+      util({year: "numeric"}),
+      util({month: "2-digit"}),
+      util({day: "2-digit"})
+    ].join("-");
   }
 
   public static getToolsList(tools: string): AppIconType[] {

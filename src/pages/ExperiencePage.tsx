@@ -1,6 +1,4 @@
 import React, {useState} from "react";
-import {dataRegistry} from "../global/DataRegistry";
-import ServerService from "../global/ServerService";
 import CardDescription from "../components/cards/CardDescription";
 import UiService from "../global/UiService";
 import TagsList from "../components/lists/TagsList";
@@ -12,16 +10,13 @@ const ExperiencePage: React.FC = () => {
   const [item, setItem] = useState<RestExperience>();
   const {title, date_start, date_end, tools, description, tags} = item! ?? {};
 
-  const init = async (id: string, didFetch?: boolean): Promise<RestExperience> => {
-    const experience = dataRegistry.getExperience();
+  const init = async (id: string, {experience}: RestDataResponse): Promise<RestCommon> => {
     const item = experience.find((entry) => entry.id === id);
     if (item) {
       setItem(item);
       return item;
     } else {
-      if (didFetch) throw new Error("Project not found");
-      await ServerService.getAllItems();
-      return init(id, true);
+      throw new Error(`Experience "${id}" does not exist.`);
     }
   }
 

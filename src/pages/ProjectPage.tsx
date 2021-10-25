@@ -1,6 +1,4 @@
 import React, {useState} from "react";
-import {dataRegistry} from "../global/DataRegistry";
-import ServerService from "../global/ServerService";
 import CardDescription from "../components/cards/CardDescription";
 import UiService from "../global/UiService";
 import TagsList from "../components/lists/TagsList";
@@ -15,19 +13,14 @@ const ProjectPage: React.FC = () => {
   const [codeSnippets, setCodeSnippets] = useState<RestCodeSnippet[]>([]);
   const {title, date_start, date_end, tools, description, tags, npm} = item! ?? {};
 
-  const init = async (id: string, didFetch?: boolean): Promise<RestProject> => {
-    const projects = dataRegistry.getProjects();
-    const codeSnippets = dataRegistry.getCodeSnippets();
+  const init = async (id: string, {projects, code_snippets}: RestDataResponse): Promise<RestCommon> => {
     const item = projects.find((item) => item.id === id);
     if (item) {
       setItem(item);
-      setCodeSnippets(codeSnippets.filter((snippet) => snippet.relation === item.id));
+      setCodeSnippets(code_snippets.filter((snippet) => snippet.relation === item.id));
       return item;
-    } else {
-      if (didFetch) throw new Error("Project not found");
-      await ServerService.getAllItems();
-      return init(id, true);
     }
+    return Promise.reject(`Project "${id}" does not exist.`);
   }
 
   const snippets = codeSnippets.map((item) =>

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import UiService from "../../global/UiService";
-import LinkListItem from "../lists/LinkListItem";
 import AppIcon from "../../icons/AppIcon";
 
 interface ContainerProps {

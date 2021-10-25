@@ -4,14 +4,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
+import {RecoilRoot} from "recoil";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <ErrorBoundary>
-        <App/>
-      </ErrorBoundary>
-    </Router>
+    <RecoilRoot>
+      <Router>
+        <ErrorBoundary>
+          <App/>
+        </ErrorBoundary>
+      </Router>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")
 );

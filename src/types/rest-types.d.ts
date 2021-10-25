@@ -1,3 +1,5 @@
+type RestItemType = "education" | "project" | "experience";
+
 interface RestCommon {
   description: Nullable<string>;
   id: string;
@@ -6,16 +8,12 @@ interface RestCommon {
   tools: Nullable<string>;
   date_end: Nullable<string>;
   date_start: string;
-  item_type: "education" | "project" | "experience";
+  item_type: RestItemType;
 }
 
 interface RestEducation extends RestCommon {
   degree: "certificate" | "ba" | "ma" | "none";
-  description: string | null;
-  id: string;
   institution: string;
-  tags: string | null;
-  title: string;
   item_type: "education";
 }
 
