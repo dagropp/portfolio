@@ -57,6 +57,10 @@
   $property: rgba(49, 49, 49, $alpha);
 }
 
+@mixin font-merriweather() {
+  font-family: 'Merriweather', serif;
+}
+
 $app-width-desktop: 1080px;
 
 $deep-purple: #4158d0;

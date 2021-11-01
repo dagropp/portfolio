@@ -1,6 +1,6 @@
 import React from "react";
 import UiService from "../../global/UiService";
-import AppIcon from "../../icons/AppIcon";
+import ToolsListItem from "./ToolsListItem";
 
 interface ContainerProps {
   tools: Nullable<string>;
@@ -12,9 +12,10 @@ const ToolsList: React.FC<ContainerProps> = ({tools, className = ""}) => {
   if (!tools) return null;
 
   const items = UiService.getToolsList(tools).map((tool) =>
-    <li key={tool}>
-      <AppIcon name={tool}/>
-    </li>
+    <ToolsListItem
+      key={tool}
+      tool={tool}
+    />
   );
 
   return (

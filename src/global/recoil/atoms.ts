@@ -10,3 +10,8 @@ export const breadcrumbsState = atom<Breadcrumb[]>({
   key: "breadcrumbsState",
   default: []
 });
+
+export const genericPopupState = atom<GenericPopup>({
+  key: "genericPopupState",
+  default: {show: false}
+});

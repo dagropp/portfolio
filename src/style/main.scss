@@ -18,7 +18,7 @@ body {
 
 section {@include restrict-width($app-width-desktop);margin: auto;padding: 20px 0;
   article {
-    > h2 {font-family: 'Merriweather', serif;font-size: 30px;margin-bottom: 15px;}
+    > h2 {@include font-merriweather;font-size: 30px;margin-bottom: 15px;}
     + article {margin-top: 20px}
   }
 }
@@ -65,7 +65,7 @@ html.dark {
 }
 
 .error-page {text-align: center;padding: 10px;
-  h1 {font-family: "Merriweather", Serif}
+  h1 {@include font-merriweather}
   .error-image {@include circle(300px);overflow: hidden;margin: 20px auto;@include shadow-main}
   p {}
   code {background-color: $gray-light;color: black;font-family: monospace;font-size: 12px;padding: 2px 3px;border-radius: 4px}

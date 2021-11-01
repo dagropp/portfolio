@@ -51,7 +51,7 @@ const ContactPopup: React.FC = () => {
   return (
     <AppPopup
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
+      closePopup={setIsOpen.bind(null, false)}
       className="contact-popup app-card"
     >
       <h2>Looks like you're interested...</h2>

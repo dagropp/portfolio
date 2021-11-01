@@ -3,7 +3,9 @@ import React from "react";
 
 class UiService {
   public static parseYears(start: string, end: Nullable<string>): string {
-    return end ? end === start ? start : `${start}-${end}` : `${start}-`;
+    const yearStart = new Date(start).getFullYear().toString();
+    const yearEnd = end ? new Date(end).getFullYear().toString() : 0;
+    return yearEnd ? yearEnd === yearStart ? yearStart : `${yearStart}-${yearEnd}` : `${yearStart}-`;
   }
 
   public static parseMonths(start: string, end: Nullable<string>) {
@@ -46,8 +48,8 @@ class UiService {
     ].join("-");
   }
 
-  public static getToolsList(tools: string): AppIconType[] {
-    const list = tools.split(",") as AppDevToolKey[];
+  public static getToolsList(tools: Nullable<string>): AppIconType[] {
+    const list = (tools ?? "").split(",") as AppDevToolKey[];
     return list.filter((item) => item in AdminService.toolsList);
   }
 

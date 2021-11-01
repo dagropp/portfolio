@@ -20,15 +20,16 @@ const ExperienceCard: React.FC<ContainerProps> = ({item}) => {
       href={"/experience_page/" + id}
     >
       <h2 className="title">{title}</h2>
+      <h3 className="company">{company}</h3>
       <p className="date">{date}</p>
       <ToolsList
         className="minified"
         tools={tools}
       />
       <CardDescription
-        className="minified"
         description={description}
       />
+      <img src="http://assets.stickpng.com/images/6036baa80d61f3000409826f.png" alt={`${company} Logo`} className="logo"/>
     </AppCard>
   )
 }

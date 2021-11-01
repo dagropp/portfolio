@@ -6,6 +6,7 @@ import "../style/cards.scss";
 import CardsSwitch from "../components/cards/CardsSwitch";
 import {useSetRecoilState} from "recoil";
 import {appDataState} from "../global/recoil/atoms";
+import {recoilService} from "../global/recoil/RecoilService";
 
 const Dashboard: React.FC = () => {
 

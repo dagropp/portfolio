@@ -16,6 +16,7 @@ class AdminService {
       jquery: {display: "jQuery"},
       php: {display: "PHP"},
       mysql: {display: "MySQL"},
+      npm: {display: "NPM"},
       java: {display: "Java"},
       python: {display: "Python"},
       typescript: {display: "TypeScript"},

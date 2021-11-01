@@ -11,12 +11,17 @@ import ContactPopup from "./components/popup/ContactPopup";
 import ErrorPage from "./pages/ErrorPage";
 import {useRecoilState} from "recoil";
 import {recoilService} from "./global/recoil/RecoilService";
-import {appDataState, breadcrumbsState} from "./global/recoil/atoms";
+import {appDataState, breadcrumbsState, genericPopupState} from "./global/recoil/atoms";
+import AppGenericPopup from "./components/popup/AppGenericPopup";
 
 const App: React.FC = () => {
 
   const location = useLocation<any>();
-  recoilService.setRecoilState(useRecoilState(appDataState), useRecoilState(breadcrumbsState));
+  recoilService.setRecoilState(
+    useRecoilState(appDataState),
+    useRecoilState(breadcrumbsState),
+    useRecoilState(genericPopupState)
+  );
 
   const routes = navService.getMenuItems()
     .map(({id, path, component, redirect}) =>
@@ -58,6 +63,7 @@ const App: React.FC = () => {
           </Route>
         </Switch>
         <ContactPopup/>
+        <AppGenericPopup/>
       </div>
   )
 }

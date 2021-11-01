@@ -27,7 +27,6 @@ const EducationCard: React.FC<ContainerProps> = ({item}) => {
         tools={tools}
       />
       <CardDescription
-        className="minified"
         description={description}
       />
     </AppCard>

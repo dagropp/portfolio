@@ -26,7 +26,6 @@ const ProjectCard: React.FC<ContainerProps> = ({item}) => {
         tools={tools}
       />
       <CardDescription
-        className="minified"
         description={description}
       />
     </AppCard>

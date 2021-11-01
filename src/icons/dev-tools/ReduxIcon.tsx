@@ -7,7 +7,7 @@ const ReduxIcon: React.FC<IconContainerProps> = ({color = "#764abc", ...rest}) =
     <SvgIconWrapper
       className="environment-icon python"
       viewBox="0 0 32 30"
-      title="Python"
+      title="Redux"
       color={color}
       {...rest}
     >

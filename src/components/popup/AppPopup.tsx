@@ -1,20 +1,20 @@
-import React, {Dispatch, RefObject, SetStateAction} from "react";
+import React, {RefObject} from "react";
 import AppOverlay from "./AppOverlay";
 
 interface ContainerProps {
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  closePopup(): void;
   hideOverlay?: boolean;
   className?: string;
   popupRef?: RefObject<HTMLDivElement>;
 }
 
-const AppPopup: React.FC<ContainerProps> = ({children, isOpen, setIsOpen, hideOverlay, popupRef, className = ""}) => {
+const AppPopup: React.FC<ContainerProps> = ({children, isOpen, closePopup, hideOverlay, popupRef, className = ""}) => {
 
   return (
     <AppOverlay
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
+      closePopup={closePopup}
       hideOverlay={hideOverlay}
     >
       <div className={`app-popup ${className}`} ref={popupRef}>
