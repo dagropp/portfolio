@@ -22,6 +22,7 @@ import GitIcon from "./dev-tools/GitIcon";
 import AppLinkIcon from "./cta/AppLinkIcon";
 import DownloadIcon from "./cta/DownloadIcon";
 import WebsiteIcon from "./cta/WebsiteIcon";
+import AgileIcon from "./dev-skills/AgileIcon";
 
 interface ContainerProps extends HTMLProps<HTMLDivElement> {
   name: AppIconType;
@@ -59,6 +60,8 @@ const AppIcon: React.FC<ContainerProps> = (props) => {
     linkedin: LinkedInIcon,
     npm: NpmIcon,
     whatsapp: WhatAppIcon,
+    // Skill icons
+    agile: AgileIcon
   }
 
   return createElement(icons[name], {...rest});

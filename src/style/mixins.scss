@@ -14,8 +14,8 @@
   width: $width;max-width: $restriction;
 }
 
-@mixin square($size) {
-  height: $size;width: $size;
+@mixin square($height, $width: $height) {
+  height: $height;width: $width;
 }
 
 @mixin circle($size) {

@@ -9,20 +9,11 @@ class UiService {
   }
 
   public static parseMonths(start: string, end: Nullable<string>) {
-    const dateStart = new Date(start);
-    const monthStart = this.getMonthString(dateStart);
-    if (end) {
-      const dateEnd = new Date(end);
-      if ((dateStart.getMonth() < dateEnd.getMonth()) || (dateStart.getFullYear() < dateEnd.getFullYear())) {
-        const monthEnd = this.getMonthString(dateEnd);
-        if (dateStart.getFullYear() < dateEnd.getFullYear()) {
-          return `${monthStart}/${dateStart.getFullYear()}-${monthEnd}/${dateEnd.getFullYear()}`;
-        }
-        return `${monthStart}-${monthEnd}/${dateStart.getFullYear()}`;
-      }
-      return `${monthStart}/${dateStart.getFullYear()}`;
-    }
-    return `${monthStart}/${dateStart.getFullYear()} -`;
+    const dateStart = new Date(start).toLocaleDateString("en-US", {month: "long", year: "numeric"});
+    const dateEnd = end && end > start
+      ? new Date(end).toLocaleDateString("en-US", {month: "long", year: "numeric"})
+      : end ? dateStart : "Present";
+    return dateEnd !== dateStart ? `${dateStart} - ${dateEnd}` : dateStart;
   }
 
   public static async getTotalNpmDownloads(packageName: string): Promise<number> {
@@ -35,8 +26,9 @@ class UiService {
   }
 
   public static sortByField<T>(array: T[], field: keyof T, descending?: boolean) {
+    const result = [...array];
     const direction = descending ? -1 : 1;
-    return array.sort((a, b) => a[field] > b[field] ? -1 * direction : 1 * direction)
+    return result.sort((a, b) => a[field] > b[field] ? 1 * direction : -1 * direction);
   }
 
   public static getFullDateString(date: Date): string {

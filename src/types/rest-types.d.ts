@@ -22,6 +22,7 @@ interface RestExperience extends RestCommon {
   item_type: "experience";
   company: string;
   link: Nullable<string>;
+  logo: string;
 }
 
 interface RestProject extends RestCommon {

@@ -1,6 +1,6 @@
 import React from "react";
 import AppCard from "./AppCard";
-import UiService from "../../global/UiService";
+import {parseMonths} from "../../global/DateService";
 import ToolsList from "../lists/ToolsList";
 import CardDescription from "./CardDescription";
 
@@ -9,8 +9,8 @@ interface ContainerProps {
 }
 
 const ExperienceCard: React.FC<ContainerProps> = ({item}) => {
-  const {company, description, title, tools, date_start, date_end, id} = item;
-  const date = UiService.parseYears(date_start, date_end);
+  const {company, description, title, tools, date_start, date_end, id, logo} = item;
+  const date = parseMonths(date_start, date_end);
 
   return (
     <AppCard
@@ -19,8 +19,8 @@ const ExperienceCard: React.FC<ContainerProps> = ({item}) => {
       metaTitle={`${title}, ${company}`}
       href={"/experience_page/" + id}
     >
-      <h2 className="title">{title}</h2>
-      <h3 className="company">{company}</h3>
+      <h3 className="title">{title}</h3>
+      <h4 className="company">{company}</h4>
       <p className="date">{date}</p>
       <ToolsList
         className="minified"
@@ -29,7 +29,10 @@ const ExperienceCard: React.FC<ContainerProps> = ({item}) => {
       <CardDescription
         description={description}
       />
-      <img src="http://assets.stickpng.com/images/6036baa80d61f3000409826f.png" alt={`${company} Logo`} className="logo"/>
+      <div
+        className="logo"
+        style={{backgroundImage: `url("${logo}")`}}
+      />
     </AppCard>
   )
 }
